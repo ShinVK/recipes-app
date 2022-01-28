@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
-import rockGlass from './images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchHeader from './components/SearchHeader';
+import Routes from './Routes/Routes';
 
 function App() {
   return (
     <div className="meals">
+      <Routes />
       <span className="logo">TRYBE</span>
       <SearchHeader />
       <object
@@ -16,8 +17,5 @@ function App() {
       >
         Glass
       </object>
-    </div>
-  );
-}
 
 export default App;
