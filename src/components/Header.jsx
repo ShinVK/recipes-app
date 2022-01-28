@@ -13,12 +13,7 @@ export default function Header() {
         onClick={ () => { history.push('/profile'); } }
         data-testid="profile-top-btn"
       >
-        <object
-          type="image/svg+xml"
-          data={ profileIcon }
-        >
-          perfil
-        </object>
+        <img src={ profileIcon } alt="Profile icon" />
       </button>
       <h3 data-testid="page-title">App de Receitas</h3>
       <button
@@ -26,12 +21,7 @@ export default function Header() {
         data-testid="search-top-btn"
         onClick={ () => { setIsSearching(!isSearching); } }
       >
-        <object
-          type="image/svg+xml"
-          data={ searchIcon }
-        >
-          perfil
-        </object>
+        <img src={ searchIcon } alt="Search icon" />
       </button>
     </div>
   );

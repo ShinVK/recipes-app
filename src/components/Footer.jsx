@@ -14,24 +14,14 @@ export default function Footer() {
         type="button"
         onClick={ () => { history.push('/drinks'); } }
       >
-        <object
-          type="image/svg+xml"
-          data={ drinkIcon }
-        >
-          Drinks
-        </object>
+        <img src={ drinkIcon } alt="Drink icon" />
       </button>
       <button
         data-testid="explore-bottom-btn"
         type="button"
         onClick={ () => { history.push('/explore'); } }
       >
-        <object
-          type="image/svg+xml"
-          data={ exploreIcon }
-        >
-          Explore
-        </object>
+        <img src={ exploreIcon } alt="Explore icon" />
       </button>
       <button
         data-testid="food-bottom-btn"
@@ -39,12 +29,7 @@ export default function Footer() {
         name="foods"
         onClick={ () => { history.push('/foods'); } }
       >
-        <object
-          type="image/svg+xml"
-          data={ mealIcon }
-        >
-          Food
-        </object>
+        <img src={ mealIcon } alt="Meal icon" />
       </button>
     </footer>
   );
