@@ -8,22 +8,22 @@ function SearchHeader() {
         <input
           type="radio"
           data-testid="ingredient-search-radio"
-          // value
-          // name
+          value="ingredientsRadio"
+          name="searchRadio"
         />
         Ingredientes
         <input
           type="radio"
           data-testid="name-search-radio"
-          // value
-          // name
+          value="nameRadio"
+          name="searchRadio"
         />
         Nome
         <input
           type="radio"
           data-testid="first-letter-search-radio"
-          // value
-          // name
+          value="firstLetterRadio"
+          name="searchRadio"
         />
         Primeira letra
       </form>
