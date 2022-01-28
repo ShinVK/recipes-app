@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import FormLogin from '../pages/Login';
+import AllHeader from '../components/AllHeader';
 
 export default function Routes() {
   return (
@@ -18,7 +19,8 @@ export default function Routes() {
       <Route path="/explore/foods/nationalities" />
       <Route path="/profile" />
       <Route path="/done-recipes" />
-      <Route path="/favorite-recipes" /> */}
+    <Route path="/favorite-recipes" /> */}
+      <Route exact path="/headertest" component={ AllHeader } />
     </Switch>
   );
 }

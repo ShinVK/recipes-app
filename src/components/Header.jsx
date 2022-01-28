@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router';
+import MyContext from '../context/Mycontext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 export default function Header() {
   const history = useHistory();
-  const [isSearching, setIsSearching] = useState(false);
+  const { stateHook: { onClickSearch } } = useContext(MyContext);
+
   return (
     <div>
       <button
@@ -24,7 +26,7 @@ export default function Header() {
       <button
         type="button"
         data-testid="search-top-btn"
-        onClick={ () => { setIsSearching(!isSearching); } }
+        onClick={ () => onClickSearch() }
       >
         <object
           type="image/svg+xml"
