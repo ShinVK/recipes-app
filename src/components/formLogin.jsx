@@ -18,7 +18,7 @@ export default function FormLogin() {
 
   const changeButton = () => {
     const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
-    const minValuePassword = 5;
+    const minValuePassword = 6;
     const emailTest = emailRegex.test(email);
     const isDisabled = !(password.length >= minValuePassword && emailTest);
     setDisabledValue(isDisabled);
@@ -34,7 +34,7 @@ export default function FormLogin() {
   };
 
   const handleClick = () => {
-    setLocalStorage('user', email);
+    setLocalStorage('user', JSON.stringify({ email }));
     setLocalStorage('cocktailsToken', 1);
     setLocalStorage('mealsToken', 1);
     history.push('/foods');

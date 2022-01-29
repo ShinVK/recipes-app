@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router';
+import { Redirect, useHistory } from 'react-router';
 import AllHeader from '../components/AllHeader';
 import MyContext from '../context/Mycontext';
 
 export default function Foods({ history: { location } }) {
-  const history = useHistory();
+  // const history = useHistory();
 
   const { stateHook: { foodsAPI } } = useContext(MyContext);
 
@@ -15,13 +15,18 @@ export default function Foods({ history: { location } }) {
     return foods12;
   };
 
+  const redirectDetailedPage = (arr) => {
+    const { idMeal } = arr[0];
+    return <Redirect push to={ `/foods/${idMeal}` } />;
+  };
+
   return (
     <div>
       <AllHeader actPage={ location.pathname } />
       <p>  Tela de Comidas </p>
 
       { foodsAPI.length === 1 ? (
-        foodsAPI.map(({ idMeal }) => history.push(`/foods/${idMeal}`))
+        redirectDetailedPage(foodsAPI)
       )
         : (reduceFoods12(foodsAPI)).map(({ idMeal, strMeal, strMealThumb }) => (
           <div key={ idMeal } data-testid={ `${idMeal}-recipe-card` }>
