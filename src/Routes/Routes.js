@@ -7,16 +7,24 @@ import ExploreFoods from '../pages/ExploreFoods';
 import ExploreFoodsIng from '../pages/ExploreFoodsIng';
 import ExploreFoodsNat from '../pages/ExploreFoodsNat';
 import FavoritesRecipes from '../pages/FavoritesRecipes';
-import FormLogin from '../pages/Login';
+import Login from '../pages/Login';
+import AllHeader from '../components/AllHeader';
 import Profile from '../pages/Profile';
 import RecipesDone from '../pages/RecipesDone';
+import Foods from '../pages/Foods';
+import Drinks from '../pages/Drinks';
+import DetailedDrink from '../pages/DetailedDrink';
+import DetailedFood from '../pages/DetailedFood';
 
 export default function Routes() {
   return (
     <Switch>
-      <Route exact path="/" component={ FormLogin } />
-      <Route path="/foods" component={ Foods } />
+      <Route exact path="/" component={ Login } />
+      <Route exact path="/foods/:id" component={ DetailedFood } />
+      <Route exact path="/foods" component={ Foods } />
+      <Route exact path="/drinks/:id" component={ DetailedDrink } />
       <Route path="/drinks" component={ Drinks } />
+      <Route exact path="/headertest" component={ AllHeader } />
       {/* <Route path="/foods/id-da-receita/in-progress" /> */}
       {/* <Route path="/drinks/id-da-receita/in-progress" /> */}
       <Route path="/explore" component={ Explorar } />
