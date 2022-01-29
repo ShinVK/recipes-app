@@ -11,6 +11,8 @@ import FormLogin from '../pages/Login';
 import AllHeader from '../components/AllHeader';
 import Profile from '../pages/Profile';
 import RecipesDone from '../pages/RecipesDone';
+import Foods from '../pages/Foods';
+import Drinks from '../pages/Drinks';
 
 export default function Routes() {
   return (
@@ -18,17 +20,6 @@ export default function Routes() {
       <Route exact path="/" component={ FormLogin } />
       <Route path="/foods" component={ Foods } />
       <Route path="/drinks" component={ Drinks } />
-      <Route path="/foods/id-da-receita/in-progress" />
-      <Route path="/drinks/id-da-receita/in-progress" />
-      <Route path="/explore" />
-      <Route path="/explore/foods" />
-      <Route path="/explore/drinks" />
-      <Route path="/explore/foods/ingredientes" />
-      <Route path="/explore/drinks/ingrediente" />
-      <Route path="/explore/foods/nationalities" />
-      <Route path="/profile" />
-      <Route path="/done-recipes" />
-    <Route path="/favorite-recipes" /> */}
       <Route exact path="/headertest" component={ AllHeader } />
       {/* <Route path="/foods/id-da-receita/in-progress" /> */}
       {/* <Route path="/drinks/id-da-receita/in-progress" /> */}

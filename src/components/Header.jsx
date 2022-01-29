@@ -6,7 +6,7 @@ import searchIcon from '../images/searchIcon.svg';
 
 export default function Header() {
   const history = useHistory();
-  const { stateHook: { onClickSearch } } = useContext(MyContext);
+  const { stateHook: { showSearchInput } } = useContext(MyContext);
 
   return (
     <div>
@@ -26,7 +26,7 @@ export default function Header() {
       <button
         type="button"
         data-testid="search-top-btn"
-        onClick={ () => onClickSearch() }
+        onClick={ () => showSearchInput() }
       >
         <object
           type="image/svg+xml"

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import fetchFoodAPI from '../services/fetchAPI';
+import React, { useContext, useState } from 'react';
+import MyContext from '../context/Mycontext';
+// import fetchFoodAPI from '../services/fetchAPI';
 
 function SearchHeader() {
   const [radioButton, setradioButton] = useState();
@@ -9,6 +10,8 @@ function SearchHeader() {
     const { name, value } = target;
     setradioButton({ [name]: value });
   };
+
+  const { stateHook: { onClickSearch } } = useContext(MyContext);
 
   return (
     <div>
@@ -48,7 +51,7 @@ function SearchHeader() {
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={ () => fetchFoodAPI(radioButton, searchInput) }
+        onClick={ () => onClickSearch(radioButton, searchInput) }
       >
         Procurar
       </button>

@@ -19,8 +19,7 @@ export const fetchFoodAPI = async (type, item) => {
   console.log(URLComplete);
   const response = await fetch(URLComplete);
   const { meals } = await response.json();
-  // return meals;
-  console.log(meals);
+  return meals;
 };
 
 export const fetchDrinkAPI = async (type, item) => {
@@ -30,7 +29,29 @@ export const fetchDrinkAPI = async (type, item) => {
   const URLComplete = `${URLBase}${endPoint}${item}`;
   console.log(URLComplete);
   const response = await fetch(URLComplete);
-  const { meals } = await response.json();
-  // return meals;
-  console.log(meals);
+  const { drinks } = await response.json();
+  return drinks;
 };
+
+// import { useEffect, useState } from 'react';
+
+// function useRequestPlanets() {
+//   const URLStarWars = 'https://swapi-trybe.herokuapp.com/api/planets/';
+//   const [data, setData] = useState([]);
+//   // const [planet, setPlanets] = useState();
+
+//   const requestStarWars = async () => {
+//     const response = await fetch(URLStarWars);
+//     const dataPlanets = await response.json();
+//     // console.log(dataPlanets.results);
+//     setData(dataPlanets.results);
+//   };
+
+//   useEffect(() => {
+//     // console.log('didmount');
+//     requestStarWars();
+//   }, []);
+//   return [data];
+// }
+
+// export default useRequestPlanets;
