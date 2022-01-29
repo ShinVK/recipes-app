@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
-import { Redirect, useHistory } from 'react-router';
+import { Redirect } from 'react-router';
 import AllHeader from '../components/AllHeader';
 import MyContext from '../context/Mycontext';
 
@@ -28,14 +28,14 @@ export default function Foods({ history: { location } }) {
       { foodsAPI.length === 1 ? (
         redirectDetailedPage(foodsAPI)
       )
-        : (reduceFoods12(foodsAPI)).map(({ idMeal, strMeal, strMealThumb }) => (
-          <div key={ idMeal } data-testid={ `${idMeal}-recipe-card` }>
+        : (reduceFoods12(foodsAPI)).map(({ idMeal, strMeal, strMealThumb }, i) => (
+          <div key={ idMeal } data-testid={ `${i}-recipe-card` }>
             <img
-              data-testid={ `${idMeal}-card-img` }
+              data-testid={ `${i}-card-img` }
               src={ strMealThumb }
               alt="thumbnail food"
             />
-            <h3 data-testid={ `${idMeal}-card-name` }>{strMeal}</h3>
+            <h3 data-testid={ `${i}-card-name` }>{strMeal}</h3>
           </div>
         ))}
     </div>

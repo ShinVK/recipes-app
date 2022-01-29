@@ -11,13 +11,17 @@ export default function Provider({ children }) {
 
   const onClickSearch = async (type, item, page = '/foods') => {
     const strAlert = 'Sorry, we haven\'t found any recipes for these filters.';
+    const { searchRadio } = type;
+    if (searchRadio === 'radio3' && item.length > 1) {
+      return global.alert('Your search must have only 1 (one) character');
+    }
     if (page === '/foods') {
-      const foodsResponse = await fetchFoodAPI(type, item);
+      const foodsResponse = await fetchFoodAPI(searchRadio, item);
       if (!foodsResponse) return global.alert(strAlert);
       setfoodsAPI(foodsResponse);
     }
     if (page === '/drinks') {
-      const drinksResponse = await fetchDrinkAPI(type, item);
+      const drinksResponse = await fetchDrinkAPI(searchRadio, item);
       if (!drinksResponse) return global.alert(strAlert);
       setdrinksAPI(drinksResponse);
     }

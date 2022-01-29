@@ -5,16 +5,14 @@ const filterType = (type) => {
   case 'radio3':
     return 'v1/1/search.php?f=';
   case 'radio1':
-    return 'v1/1/search.php?i=';
+    return 'v1/1/filter.php?i=';
   default:
     return '';
   }
 };
 export const fetchFoodAPI = async (type, item) => {
-  const { searchRadio } = type;
-
   const URLBase = 'https://www.themealdb.com/api/json/';
-  const endPoint = filterType(searchRadio);
+  const endPoint = filterType(type);
   const URLComplete = `${URLBase}${endPoint}${item}`;
   // console.log(URLComplete);
   try {
@@ -28,9 +26,8 @@ export const fetchFoodAPI = async (type, item) => {
 };
 
 export const fetchDrinkAPI = async (type, item) => {
-  const { searchRadio } = type;
   const URLBase = 'https://www.thecocktaildb.com/api/json/';
-  const endPoint = filterType(searchRadio);
+  const endPoint = filterType(type);
   const URLComplete = `${URLBase}${endPoint}${item}`;
   const response = await fetch(URLComplete);
   const { drinks } = await response.json();
