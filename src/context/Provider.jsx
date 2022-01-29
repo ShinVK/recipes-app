@@ -9,7 +9,7 @@ export default function Provider({ children }) {
   // const [actpage, setactPage] = useState('');
   const [drinksAPI, setdrinksAPI] = useState([]);
 
-  const onClickSearch = async (type, item, page) => {
+  const onClickSearch = async (type, item, page = '/foods') => {
     console.log(page);
     if (page === '/foods') {
       const foodsResponse = await fetchFoodAPI(type, item);

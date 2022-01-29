@@ -12,6 +12,7 @@ function SearchHeader({ page }) {
     const { name, value } = target;
     if (value === 'radio3' && searchInput.length > 1) {
       global.alert('Your search must have only 1 (one) character');
+      setradioButton({ [name]: value });
     } else {
       setradioButton({ [name]: value });
     }
