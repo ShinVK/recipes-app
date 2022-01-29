@@ -1,14 +1,20 @@
+import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import MyContext from '../context/Mycontext';
+
 // import fetchFoodAPI from '../services/fetchAPI';
 
-function SearchHeader() {
+function SearchHeader({ page }) {
   const [radioButton, setradioButton] = useState();
   const [searchInput, setSearchInput] = useState('');
 
   const handleChangeRadio = ({ target }) => {
     const { name, value } = target;
-    setradioButton({ [name]: value });
+    if (value === 'radio3' && searchInput.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
+    } else {
+      setradioButton({ [name]: value });
+    }
   };
 
   const { stateHook: { onClickSearch } } = useContext(MyContext);
@@ -51,7 +57,7 @@ function SearchHeader() {
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={ () => onClickSearch(radioButton, searchInput) }
+        onClick={ () => onClickSearch(radioButton, searchInput, page) }
       >
         Procurar
       </button>
@@ -59,6 +65,8 @@ function SearchHeader() {
   );
 }
 
-// SearchHeader.propTypes = {};
+SearchHeader.propTypes = {
+  page: PropTypes.string.isRequired,
+};
 
 export default SearchHeader;

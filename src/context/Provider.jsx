@@ -6,16 +6,16 @@ import { fetchDrinkAPI, fetchFoodAPI } from '../services/fetchAPI';
 export default function Provider({ children }) {
   const [isSearching, setIsSearching] = useState(false);
   const [foodsAPI, setfoodsAPI] = useState([]);
-  const [actpage, setactPage] = useState('');
+  // const [actpage, setactPage] = useState('');
   const [drinksAPI, setdrinksAPI] = useState([]);
 
-  const onClickSearch = async (type, item) => {
-    console.log(actpage);
-    if (actpage === 'food') {
+  const onClickSearch = async (type, item, page) => {
+    console.log(page);
+    if (page === '/foods') {
       const foodsResponse = await fetchFoodAPI(type, item);
       setfoodsAPI(foodsResponse);
     }
-    if (actpage === 'drink') {
+    if (page === '/drinks') {
       const drinksResponse = await fetchDrinkAPI(type, item);
       setdrinksAPI(drinksResponse);
     }
@@ -30,7 +30,7 @@ export default function Provider({ children }) {
     onClickSearch,
     showSearchInput,
     foodsAPI,
-    setactPage,
+    // setactPage,
     drinksAPI,
   };
 

@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import MyContext from '../context/Mycontext';
+// import MyContext from '../context/Mycontext';
 import { setLocalStorage } from '../services/localStorage';
 
 export default function FormLogin() {
   const history = useHistory();
-  const { stateHook: { setactPage } } = useContext(MyContext);
+  // const { stateHook: { setactPage } } = useContext(MyContext);
 
   const [disableValue, setDisabledValue] = useState(true);
 
@@ -37,7 +37,6 @@ export default function FormLogin() {
     setLocalStorage('user', email);
     setLocalStorage('cocktailsToken', 1);
     setLocalStorage('mealsToken', 1);
-    setactPage('food');
     history.push('/foods');
   };
 

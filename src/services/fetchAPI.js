@@ -17,9 +17,13 @@ export const fetchFoodAPI = async (type, item) => {
   const endPoint = filterType(searchRadio);
   const URLComplete = `${URLBase}${endPoint}${item}`;
   console.log(URLComplete);
-  const response = await fetch(URLComplete);
-  const { meals } = await response.json();
-  return meals;
+  try {
+    const response = await fetch(URLComplete);
+    const { meals } = await response.json();
+    return meals;
+  } catch (error) {
+    console.error(`deu ruim ${error}`);
+  }
 };
 
 export const fetchDrinkAPI = async (type, item) => {
