@@ -13,6 +13,7 @@ const filterType = (type) => {
 };
 export const fetchFoodAPI = async (type, item) => {
   const { searchRadio } = type;
+
   const URLBase = 'https://www.themealdb.com/api/json/';
   const endPoint = filterType(searchRadio);
   const URLComplete = `${URLBase}${endPoint}${item}`;
@@ -22,6 +23,7 @@ export const fetchFoodAPI = async (type, item) => {
     const { meals } = await response.json();
     return meals;
   } catch (error) {
+    // return global.alert(strAlert);
     console.error(`deu ruim ${error}`);
   }
 };

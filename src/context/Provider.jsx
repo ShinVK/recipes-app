@@ -10,13 +10,15 @@ export default function Provider({ children }) {
   const [drinksAPI, setdrinksAPI] = useState([]);
 
   const onClickSearch = async (type, item, page = '/foods') => {
-    console.log(page);
+    const strAlert = 'Sorry, we haven\'t found any recipes for these filters.';
     if (page === '/foods') {
       const foodsResponse = await fetchFoodAPI(type, item);
+      if (!foodsResponse) return global.alert(strAlert);
       setfoodsAPI(foodsResponse);
     }
     if (page === '/drinks') {
       const drinksResponse = await fetchDrinkAPI(type, item);
+      if (!drinksResponse) return global.alert(strAlert);
       setdrinksAPI(drinksResponse);
     }
   };

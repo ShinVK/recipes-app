@@ -19,6 +19,7 @@ export default function Foods({ history: { location } }) {
     <div>
       <AllHeader actPage={ location.pathname } />
       <p>  Tela de Comidas </p>
+
       { foodsAPI.length === 1 ? (
         foodsAPI.map(({ idMeal }) => history.push(`/foods/${idMeal}`))
       )
