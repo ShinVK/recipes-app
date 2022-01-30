@@ -21,8 +21,8 @@ export default function Drinks({ history: { location } }) {
 
   return (
     <div>
-      <AllHeader actPage={ location.pathname } />
-      <p>Tela Principal de Drinks</p>
+      <AllHeader title="Drinks" actPage={ location.pathname } />
+      {/* <p>Tela Principal de Drinks</p> */}
       { drinksAPI.length === 1 ? (
         redirectDetailedPage(drinksAPI)
       )

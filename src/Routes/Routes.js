@@ -15,6 +15,8 @@ import Foods from '../pages/Foods';
 import Drinks from '../pages/Drinks';
 import DetailedDrink from '../pages/DetailedDrink';
 import DetailedFood from '../pages/DetailedFood';
+import FoodsInProgress from '../pages/FoodsInProgress';
+import DrinksInProgress from '../pages/DrinksInProgress';
 
 export default function Routes() {
   return (
@@ -23,19 +25,19 @@ export default function Routes() {
       <Route exact path="/foods/:id" component={ DetailedFood } />
       <Route exact path="/foods" component={ Foods } />
       <Route exact path="/drinks/:id" component={ DetailedDrink } />
-      <Route path="/drinks" component={ Drinks } />
+      <Route exact path="/drinks" component={ Drinks } />
       <Route exact path="/headertest" component={ AllHeader } />
-      {/* <Route path="/foods/id-da-receita/in-progress" /> */}
-      {/* <Route path="/drinks/id-da-receita/in-progress" /> */}
-      <Route path="/explore" component={ Explorar } />
-      <Route path="/explore/foods" component={ ExploreFoods } />
-      <Route path="/explore/drinks" component={ ExploreDrinks } />
-      <Route path="/explore/foods/ingredientes" component={ ExploreFoodsIng } />
-      <Route path="/explore/drinks/ingrediente" component={ ExploreDrinksIng } />
-      <Route path="/explore/foods/nationalities" component={ ExploreFoodsNat } />
-      <Route path="/profile" component={ Profile } />
-      <Route path="/done-recipes" component={ RecipesDone } />
-      <Route path="/favorite-recipes" component={ FavoritesRecipes } />
+      <Route exact path="/foods/:id/in-progress" component={ FoodsInProgress } />
+      <Route exact path="/drinks/:id/in-progress" component={ DrinksInProgress } />
+      <Route exact path="/explore" component={ Explorar } />
+      <Route exact path="/explore/foods" component={ ExploreFoods } />
+      <Route exact path="/explore/drinks" component={ ExploreDrinks } />
+      <Route exact path="/explore/foods/ingredients" component={ ExploreFoodsIng } />
+      <Route exact path="/explore/drinks/ingredients" component={ ExploreDrinksIng } />
+      <Route exact path="/explore/foods/nationalities" component={ ExploreFoodsNat } />
+      <Route exact path="/profile" component={ Profile } />
+      <Route exact path="/done-recipes" component={ RecipesDone } />
+      <Route exact path="/favorite-recipes" component={ FavoritesRecipes } />
     </Switch>
   );
 }
