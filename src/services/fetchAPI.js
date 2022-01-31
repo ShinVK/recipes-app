@@ -50,25 +50,17 @@ export const fetchDrinksInitial = async () => {
   return drinks;
 };
 
-// import { useEffect, useState } from 'react';
+export const fetchCategoriesFood = async () => {
+  const URLDRINKS = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+  const response = await fetch(URLDRINKS);
+  const { meals } = await response.json();
+  // console.log(meals);
+  return meals;
+};
 
-// function useRequestPlanets() {
-//   const URLStarWars = 'https://swapi-trybe.herokuapp.com/api/planets/';
-//   const [data, setData] = useState([]);
-//   // const [planet, setPlanets] = useState();
-
-//   const requestStarWars = async () => {
-//     const response = await fetch(URLStarWars);
-//     const dataPlanets = await response.json();
-//     // console.log(dataPlanets.results);
-//     setData(dataPlanets.results);
-//   };
-
-//   useEffect(() => {
-//     // console.log('didmount');
-//     requestStarWars();
-//   }, []);
-//   return [data];
-// }
-
-// export default useRequestPlanets;
+export const fetchCategoriesDrink = async () => {
+  const URLDRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  const response = await fetch(URLDRINKS);
+  const { drinks } = await response.json();
+  return drinks;
+};

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './Mycontext';
 import {
+  fetchCategoriesDrink,
+  fetchCategoriesFood,
   fetchDrinkAPI,
   fetchDrinksInitial,
   fetchFoodAPI,
@@ -12,10 +14,16 @@ export default function Provider({ children }) {
   const [foodsAPI, setfoodsAPI] = useState([]);
   // const [actpage, setactPage] = useState('');
   const [drinksAPI, setdrinksAPI] = useState([]);
+  const [categoriesFood, setcategoriesFood] = useState([]);
+  const [categoriesDrinks, setcategoriesDrinks] = useState([]);
 
   const saveItemsAPI = async () => {
     const responseDrinks = await fetchDrinksInitial();
     const response = await fetchFoodInitial();
+    const categFoods = await fetchCategoriesFood();
+    const categDrinks = await fetchCategoriesDrink();
+    setcategoriesDrinks(categDrinks);
+    setcategoriesFood(categFoods);
     setfoodsAPI(response);
     setdrinksAPI(responseDrinks);
   };
@@ -53,6 +61,8 @@ export default function Provider({ children }) {
     foodsAPI,
     // setactPage,
     drinksAPI,
+    categoriesDrinks,
+    categoriesFood,
   };
 
   return (
