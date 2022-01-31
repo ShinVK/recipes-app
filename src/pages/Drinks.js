@@ -7,7 +7,7 @@ import MyContext from '../context/Mycontext';
 
 export default function Drinks({ history: { location } }) {
   const { stateHook:
-    { drinksAPI, categoriesDrinks, catDrinks, handleClick } } = useContext(MyContext);
+    { drinksAPI, categoriesDrinks, handleClick, isRedirect } } = useContext(MyContext);
 
   const reduceDrinks12 = (arr, num) => {
     const drinks12 = arr.slice(0, num);
@@ -24,23 +24,22 @@ export default function Drinks({ history: { location } }) {
     <div>
       <AllHeader title="Drinks" actPage={ location.pathname } />
       <form>
-        <select
-          onClick={ (event) => handleClick(event, 'drinks') }
-          value={ catDrinks }
-        >
-          {reduceDrinks12(categoriesDrinks, +'5').map(({ strCategory }, i) => (
-            <option
-              key={ i }
-              data-testid={ `${strCategory}-category-filter` }
-              value={ strCategory }
-            >
-              {strCategory}
-            </option>
-          ))}
-        </select>
+
+        {reduceDrinks12(categoriesDrinks, +'5').map(({ strCategory }, i) => (
+          <button
+            key={ i }
+            data-testid={ `${strCategory}-category-filter` }
+            value={ strCategory }
+            onClick={ (event) => handleClick(event, 'drinks') }
+            type="button"
+          >
+            {strCategory}
+          </button>
+        ))}
+
       </form>
       <div className="container__meals">
-        { drinksAPI.length === 1 ? (
+        { drinksAPI.length === 1 && isRedirect ? (
           redirectDetailedPage(drinksAPI)
         )
           : (reduceDrinks12(drinksAPI, +'12'))
