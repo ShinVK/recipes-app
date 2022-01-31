@@ -34,6 +34,22 @@ export const fetchDrinkAPI = async (type, item) => {
   return drinks;
 };
 
+export const fetchFoodInitial = async () => {
+  const URLFOOD = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  const response = await fetch(URLFOOD);
+  const { meals } = await response.json();
+  // console.log(meals);
+  return meals;
+};
+
+export const fetchDrinksInitial = async () => {
+  const URLDRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  const response = await fetch(URLDRINKS);
+  const { drinks } = await response.json();
+  // console.log(meals);
+  return drinks;
+};
+
 // import { useEffect, useState } from 'react';
 
 // function useRequestPlanets() {

@@ -23,21 +23,31 @@ export default function Foods({ history: { location } }) {
   return (
     <div>
       <AllHeader title="Foods" actPage={ location.pathname } />
-      {/* <h3 data-testid="page-title">  Foods </h3> */}
+      <div className="container__meals">
 
-      { foodsAPI.length === 1 ? (
-        redirectDetailedPage(foodsAPI)
-      )
-        : (reduceFoods12(foodsAPI)).map(({ idMeal, strMeal, strMealThumb }, i) => (
-          <div key={ idMeal } data-testid={ `${i}-recipe-card` }>
-            <img
-              data-testid={ `${i}-card-img` }
-              src={ strMealThumb }
-              alt="thumbnail food"
-            />
-            <h3 data-testid={ `${i}-card-name` }>{strMeal}</h3>
-          </div>
-        ))}
+        { foodsAPI.length === 1 ? (
+          redirectDetailedPage(foodsAPI)
+        )
+          : (reduceFoods12(foodsAPI)).map(({ idMeal, strMeal, strMealThumb }, i) => (
+            <div
+              key={ idMeal }
+              data-testid={ `${i}-recipe-card` }
+            >
+              <img
+                style={ { width: '50px' } }
+                data-testid={ `${i}-card-img` }
+                src={ strMealThumb }
+                alt="thumbnail food"
+              />
+              <h3
+                data-testid={ `${i}-card-name` }
+                style={ { font: '10px' } }
+              >
+                {strMeal}
+              </h3>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

@@ -22,20 +22,22 @@ export default function Drinks({ history: { location } }) {
   return (
     <div>
       <AllHeader title="Drinks" actPage={ location.pathname } />
-      {/* <p>Tela Principal de Drinks</p> */}
-      { drinksAPI.length === 1 ? (
-        redirectDetailedPage(drinksAPI)
-      )
-        : (reduceDrinks12(drinksAPI)).map(({ idDrink, strDrink, strDrinkThumb }, i) => (
-          <div key={ idDrink } data-testid={ `${i}-recipe-card` }>
-            <img
-              data-testid={ `${i}-card-img` }
-              src={ strDrinkThumb }
-              alt="thumbnail drink"
-            />
-            <h3 data-testid={ `${i}-card-name` }>{strDrink}</h3>
-          </div>
-        ))}
+      <div className="container__meals">
+        { drinksAPI.length === 1 ? (
+          redirectDetailedPage(drinksAPI)
+        )
+          : (reduceDrinks12(drinksAPI)).map(({ idDrink, strDrink, strDrinkThumb }, i) => (
+            <div key={ idDrink } data-testid={ `${i}-recipe-card` }>
+              <img
+                style={ { width: '50px' } }
+                data-testid={ `${i}-card-img` }
+                src={ strDrinkThumb }
+                alt="thumbnail drink"
+              />
+              <h3 data-testid={ `${i}-card-name` }>{strDrink}</h3>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

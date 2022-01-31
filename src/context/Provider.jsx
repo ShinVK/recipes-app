@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './Mycontext';
-import { fetchDrinkAPI, fetchFoodAPI } from '../services/fetchAPI';
+import {
+  fetchDrinkAPI,
+  fetchDrinksInitial,
+  fetchFoodAPI,
+  fetchFoodInitial } from '../services/fetchAPI';
 
 export default function Provider({ children }) {
   const [isSearching, setIsSearching] = useState(false);
   const [foodsAPI, setfoodsAPI] = useState([]);
   // const [actpage, setactPage] = useState('');
   const [drinksAPI, setdrinksAPI] = useState([]);
+
+  const saveItemsAPI = async () => {
+    const responseDrinks = await fetchDrinksInitial();
+    const response = await fetchFoodInitial();
+    setfoodsAPI(response);
+    setdrinksAPI(responseDrinks);
+  };
+
+  useEffect(() => {
+    saveItemsAPI();
+  }, []);
 
   const onClickSearch = async (type, item, page = '/foods') => {
     const strAlert = 'Sorry, we haven\'t found any recipes for these filters.';
