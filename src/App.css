@@ -39,8 +39,8 @@
 
 .container__meals {
   display: flex;
-  width: 300px;
   flex-wrap: nowrap;
+  width: 300px;
 }
 
 @keyframes shake {

@@ -64,3 +64,21 @@ export const fetchCategoriesDrink = async () => {
   const { drinks } = await response.json();
   return drinks;
 };
+
+export const fetchFilterCategory = async (item, type) => {
+  const URLFoods = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
+  const URLDrinks = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
+  if (type === 'food') {
+    const completeURL = `${URLFoods}${item}`;
+    const response = await fetch(completeURL);
+    const { meals } = await response.json();
+    // console.log(results);
+    return meals;
+  }
+  if (type === 'drinks') {
+    const completeURL = `${URLDrinks}${item}`;
+    const response = await fetch(completeURL);
+    const { drinks } = await response.json();
+    return drinks;
+  }
+};

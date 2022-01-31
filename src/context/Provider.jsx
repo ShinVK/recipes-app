@@ -6,13 +6,13 @@ import {
   fetchCategoriesFood,
   fetchDrinkAPI,
   fetchDrinksInitial,
+  fetchFilterCategory,
   fetchFoodAPI,
   fetchFoodInitial } from '../services/fetchAPI';
 
 export default function Provider({ children }) {
   const [isSearching, setIsSearching] = useState(false);
   const [foodsAPI, setfoodsAPI] = useState([]);
-  // const [actpage, setactPage] = useState('');
   const [drinksAPI, setdrinksAPI] = useState([]);
   const [categoriesFood, setcategoriesFood] = useState([]);
   const [categoriesDrinks, setcategoriesDrinks] = useState([]);
@@ -30,11 +30,18 @@ export default function Provider({ children }) {
     setdrinksAPI(responseDrinks);
   };
 
-  const handleClick = (event, page) => {
+  const handleClick = async ({ target }, page) => {
+    const { value } = target;
     if (page === 'food') {
-      setcatFoods(event.target.value);
+      if (catFoods === value) return saveItemsAPI();
+      setcatFoods((value));
+      const results = await fetchFilterCategory(value, page);
+      setfoodsAPI(results);
     } if (page === 'drinks') {
-      setcatDrinks(event.target.value);
+      if (catDrinks === value) return saveItemsAPI();
+      setcatDrinks(value);
+      const results = await fetchFilterCategory(value, page);
+      setdrinksAPI(results);
     }
   };
 

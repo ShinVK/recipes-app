@@ -8,7 +8,7 @@ export default function Foods({ history: { location } }) {
   // const history = useHistory();
 
   const { stateHook:
-     { foodsAPI, categoriesFood, handleClick, catFoods } } = useContext(MyContext);
+     { foodsAPI, categoriesFood, handleClick } } = useContext(MyContext);
 
   const reduceFoods12 = (arr, num) => {
     const foods12 = arr.slice(0, num);
@@ -25,20 +25,22 @@ export default function Foods({ history: { location } }) {
     <div>
       <AllHeader title="Foods" actPage={ location.pathname } />
       <form>
-        <select
-          onChange={ (event) => handleClick(event, 'food') }
-          value={ catFoods }
-        >
-          {reduceFoods12(categoriesFood, +'5').map(({ strCategory }, i) => (
-            <option
-              value={ strCategory }
-              key={ i }
-              data-testid={ `${strCategory}-category-filter` }
-            >
-              {strCategory}
-            </option>
-          ))}
-        </select>
+        {/* <select
+          onClick={ (event) => handleClick(event, 'food') }
+        > */}
+        {reduceFoods12(categoriesFood, +'5').map(({ strCategory }, i) => (
+          <button
+            type="button"
+            value={ strCategory }
+            key={ i }
+            data-testid={ `${strCategory}-category-filter` }
+            onClick={ (event) => handleClick(event, 'food') }
+
+          >
+            {strCategory}
+          </button>
+        ))}
+        {/* </select> */}
       </form>
       <div className="container__meals">
         { foodsAPI.length === 1 ? (

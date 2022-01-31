@@ -25,7 +25,7 @@ export default function Drinks({ history: { location } }) {
       <AllHeader title="Drinks" actPage={ location.pathname } />
       <form>
         <select
-          onChange={ (event) => handleClick(event, 'drinks') }
+          onClick={ (event) => handleClick(event, 'drinks') }
           value={ catDrinks }
         >
           {reduceDrinks12(categoriesDrinks, +'5').map(({ strCategory }, i) => (
