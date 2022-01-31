@@ -2,13 +2,14 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Routes from './Routes/Routes';
+import Provider from './context/Provider';
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <Routes />
-    </div>
+    <Provider>
+      <div className="meals">
+        <Routes />
+      </div>
+    </Provider>
   );
 }
-
-export default App;
