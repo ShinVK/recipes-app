@@ -16,6 +16,8 @@ export default function Provider({ children }) {
   const [drinksAPI, setdrinksAPI] = useState([]);
   const [categoriesFood, setcategoriesFood] = useState([]);
   const [categoriesDrinks, setcategoriesDrinks] = useState([]);
+  const [catFoods, setcatFoods] = useState('');
+  const [catDrinks, setcatDrinks] = useState('');
 
   const saveItemsAPI = async () => {
     const responseDrinks = await fetchDrinksInitial();
@@ -26,6 +28,14 @@ export default function Provider({ children }) {
     setcategoriesFood(categFoods);
     setfoodsAPI(response);
     setdrinksAPI(responseDrinks);
+  };
+
+  const handleClick = (event, page) => {
+    if (page === 'food') {
+      setcatFoods(event.target.value);
+    } if (page === 'drinks') {
+      setcatDrinks(event.target.value);
+    }
   };
 
   useEffect(() => {
@@ -63,6 +73,9 @@ export default function Provider({ children }) {
     drinksAPI,
     categoriesDrinks,
     categoriesFood,
+    catFoods,
+    catDrinks,
+    handleClick,
   };
 
   return (

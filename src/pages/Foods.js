@@ -7,7 +7,8 @@ import MyContext from '../context/Mycontext';
 export default function Foods({ history: { location } }) {
   // const history = useHistory();
 
-  const { stateHook: { foodsAPI, categoriesFood } } = useContext(MyContext);
+  const { stateHook:
+     { foodsAPI, categoriesFood, handleClick, catFoods } } = useContext(MyContext);
 
   const reduceFoods12 = (arr, num) => {
     const foods12 = arr.slice(0, num);
@@ -24,9 +25,13 @@ export default function Foods({ history: { location } }) {
     <div>
       <AllHeader title="Foods" actPage={ location.pathname } />
       <form>
-        <select>
+        <select
+          onChange={ (event) => handleClick(event, 'food') }
+          value={ catFoods }
+        >
           {reduceFoods12(categoriesFood, +'5').map(({ strCategory }, i) => (
             <option
+              value={ strCategory }
               key={ i }
               data-testid={ `${strCategory}-category-filter` }
             >

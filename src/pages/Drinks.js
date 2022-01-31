@@ -6,7 +6,8 @@ import AllHeader from '../components/AllHeader';
 import MyContext from '../context/Mycontext';
 
 export default function Drinks({ history: { location } }) {
-  const { stateHook: { drinksAPI, categoriesDrinks } } = useContext(MyContext);
+  const { stateHook:
+    { drinksAPI, categoriesDrinks, catDrinks, handleClick } } = useContext(MyContext);
 
   const reduceDrinks12 = (arr, num) => {
     const drinks12 = arr.slice(0, num);
@@ -23,11 +24,15 @@ export default function Drinks({ history: { location } }) {
     <div>
       <AllHeader title="Drinks" actPage={ location.pathname } />
       <form>
-        <select>
+        <select
+          onChange={ (event) => handleClick(event, 'drinks') }
+          value={ catDrinks }
+        >
           {reduceDrinks12(categoriesDrinks, +'5').map(({ strCategory }, i) => (
             <option
               key={ i }
               data-testid={ `${strCategory}-category-filter` }
+              value={ strCategory }
             >
               {strCategory}
             </option>
