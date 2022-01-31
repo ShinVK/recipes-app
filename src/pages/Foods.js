@@ -22,8 +22,8 @@ export default function Foods({ history: { location } }) {
 
   return (
     <div>
-      <AllHeader actPage={ location.pathname } />
-      <p>  Tela de Comidas </p>
+      <AllHeader title="Foods" actPage={ location.pathname } />
+      {/* <h3 data-testid="page-title">  Foods </h3> */}
 
       { foodsAPI.length === 1 ? (
         redirectDetailedPage(foodsAPI)
