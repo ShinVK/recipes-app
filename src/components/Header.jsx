@@ -11,13 +11,6 @@ export default function Header({ title, search }) {
 
   return (
     <div>
-      {/* <button
-        type="button"
-        onClick={ () => { history.push('/profile'); } }
-        data-testid="profile-top-btn"
-      >
-        <img src={ profileIcon } alt="profile icon" />
-      </button> */}
       <h3 data-testid="page-title">{title}</h3>
       <input
         type="image"
@@ -36,14 +29,6 @@ export default function Header({ title, search }) {
             onClick={ () => showSearchInput() }
           />)
         : null}
-      {/* <button
-        type="button"
-        data-testid="search-top-btn"
-        onClick={ () => showSearchInput() }
-      >
-        <img src={ searchIcon } alt="search icon" />
-
-      </button> */}
     </div>
   );
 }
