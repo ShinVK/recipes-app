@@ -18,6 +18,7 @@ export default function Provider({ children }) {
   const [categoriesDrinks, setcategoriesDrinks] = useState([]);
   const [catFoods, setcatFoods] = useState('');
   const [catDrinks, setcatDrinks] = useState('');
+  const [isRedirect, setisRedirect] = useState(false);
 
   const saveItemsAPI = async () => {
     const responseDrinks = await fetchDrinksInitial();
@@ -32,6 +33,7 @@ export default function Provider({ children }) {
 
   const handleClick = async ({ target }, page) => {
     const { value } = target;
+    setisRedirect(false);
     if (page === 'food') {
       if (catFoods === value) return saveItemsAPI();
       setcatFoods((value));
@@ -52,6 +54,7 @@ export default function Provider({ children }) {
   const onClickSearch = async (type, item, page = '/foods') => {
     const strAlert = 'Sorry, we haven\'t found any recipes for these filters.';
     const { searchRadio } = type;
+    setisRedirect(true);
     if (searchRadio === 'radio3' && item.length > 1) {
       return global.alert('Your search must have only 1 (one) character');
     }
@@ -83,6 +86,7 @@ export default function Provider({ children }) {
     catFoods,
     catDrinks,
     handleClick,
+    isRedirect,
   };
 
   return (

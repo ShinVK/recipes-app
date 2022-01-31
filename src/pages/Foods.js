@@ -8,7 +8,7 @@ export default function Foods({ history: { location } }) {
   // const history = useHistory();
 
   const { stateHook:
-     { foodsAPI, categoriesFood, handleClick } } = useContext(MyContext);
+     { foodsAPI, categoriesFood, handleClick, isRedirect } } = useContext(MyContext);
 
   const reduceFoods12 = (arr, num) => {
     const foods12 = arr.slice(0, num);
@@ -43,7 +43,7 @@ export default function Foods({ history: { location } }) {
         {/* </select> */}
       </form>
       <div className="container__meals">
-        { foodsAPI.length === 1 ? (
+        { foodsAPI.length === 1 && isRedirect ? (
           redirectDetailedPage(foodsAPI)
         )
           : (reduceFoods12(foodsAPI, +'12'))
