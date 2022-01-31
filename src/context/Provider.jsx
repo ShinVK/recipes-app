@@ -35,12 +35,12 @@ export default function Provider({ children }) {
     const { value } = target;
     setisRedirect(false);
     if (page === 'food') {
-      if (catFoods === value) return saveItemsAPI();
+      if (catFoods === value || value === 'all') return saveItemsAPI();
       setcatFoods((value));
       const results = await fetchFilterCategory(value, page);
       setfoodsAPI(results);
     } if (page === 'drinks') {
-      if (catDrinks === value) return saveItemsAPI();
+      if (catDrinks === value || value === 'all') return saveItemsAPI();
       setcatDrinks(value);
       const results = await fetchFilterCategory(value, page);
       setdrinksAPI(results);

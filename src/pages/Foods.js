@@ -40,6 +40,14 @@ export default function Foods({ history: { location } }) {
             {strCategory}
           </button>
         ))}
+        <button
+          type="button"
+          value="all"
+          data-testid="All-category-filter"
+          onClick={ (event) => handleClick(event, 'food') }
+        >
+          All
+        </button>
         {/* </select> */}
       </form>
       <div className="container__meals">

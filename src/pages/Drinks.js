@@ -36,6 +36,14 @@ export default function Drinks({ history: { location } }) {
             {strCategory}
           </button>
         ))}
+        <button
+          type="button"
+          value="all"
+          data-testid="All-category-filter"
+          onClick={ (event) => handleClick(event, 'food') }
+        >
+          All
+        </button>
 
       </form>
       <div className="container__meals">
