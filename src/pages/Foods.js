@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
-import { Redirect } from 'react-router';
+import { Redirect, useHistory } from 'react-router';
 import AllHeader from '../components/AllHeader';
 import MyContext from '../context/Mycontext';
 
 export default function Foods({ history: { location } }) {
-  // const history = useHistory();
+  const history = useHistory();
 
   const { stateHook:
      { foodsAPI, categoriesFood, handleClick, isRedirect } } = useContext(MyContext);
@@ -59,6 +59,9 @@ export default function Foods({ history: { location } }) {
               <div
                 key={ idMeal }
                 data-testid={ `${i}-recipe-card` }
+                onClick={ () => history.push(`/foods/${idMeal}`) }
+                aria-hidden="true"
+                role="button"
               >
                 <img
                   style={ { width: '50px' } }

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
-import { Redirect } from 'react-router';
+import { Redirect, useHistory } from 'react-router';
 // import { useHistory } from 'react-router';
 import AllHeader from '../components/AllHeader';
 import MyContext from '../context/Mycontext';
@@ -8,6 +8,7 @@ import MyContext from '../context/Mycontext';
 export default function Drinks({ history: { location } }) {
   const { stateHook:
     { drinksAPI, categoriesDrinks, handleClick, isRedirect } } = useContext(MyContext);
+  const history = useHistory();
 
   const reduceDrinks12 = (arr, num) => {
     const drinks12 = arr.slice(0, num);
@@ -52,7 +53,13 @@ export default function Drinks({ history: { location } }) {
         )
           : (reduceDrinks12(drinksAPI, +'12'))
             .map(({ idDrink, strDrink, strDrinkThumb }, i) => (
-              <div key={ idDrink } data-testid={ `${i}-recipe-card` }>
+              <div
+                key={ idDrink }
+                data-testid={ `${i}-recipe-card` }
+                onClick={ () => history.push(`/drinks/${idDrink}`) }
+                aria-hidden="true"
+                role="button"
+              >
                 <img
                   style={ { width: '50px' } }
                   data-testid={ `${i}-card-img` }
