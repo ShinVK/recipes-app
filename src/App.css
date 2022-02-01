@@ -37,6 +37,12 @@
   font-weight: 900;
 }
 
+.container__meals {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 300px;
+}
+
 @keyframes shake {
 
   0% {

@@ -16,5 +16,9 @@ export default function AllHeader({ actPage, title, btnSearch = true }) {
 AllHeader.propTypes = {
   actPage: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  btnSearch: PropTypes.bool.isRequired,
+  btnSearch: PropTypes.bool,
+};
+
+AllHeader.defaultProps = {
+  btnSearch: true,
 };
