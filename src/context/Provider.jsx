@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './Mycontext';
 import { fetchDrinkAPI, fetchFoodAPI } from '../services/fetchAPI';
+import { fetchDetailsFoodAPI } from '../services/fetchAPIDetails';
 
 export default function Provider({ children }) {
   const [isSearching, setIsSearching] = useState(false);
   const [foodsAPI, setfoodsAPI] = useState([]);
   // const [actpage, setactPage] = useState('');
   const [drinksAPI, setdrinksAPI] = useState([]);
+  const [detailsFood, setDetailsFood] = useState([]);
 
   const onClickSearch = async (type, item, page = '/foods') => {
     const strAlert = 'Sorry, we haven\'t found any recipes for these filters.';
@@ -31,6 +33,11 @@ export default function Provider({ children }) {
     setIsSearching(!isSearching);
   };
 
+  const getDetailsFood = async (id) => {
+    const data = await fetchDetailsFoodAPI(id);
+    setDetailsFood(data);
+  };
+
   const stateHook = {
     isSearching,
     onClickSearch,
@@ -38,6 +45,8 @@ export default function Provider({ children }) {
     foodsAPI,
     // setactPage,
     drinksAPI,
+    getDetailsFood,
+    detailsFood,
   };
 
   return (
