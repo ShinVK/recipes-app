@@ -9,7 +9,7 @@ export default function Provider({ children }) {
   const [foodsAPI, setfoodsAPI] = useState([]);
   // const [actpage, setactPage] = useState('');
   const [drinksAPI, setdrinksAPI] = useState([]);
-  const [detailsFood, setDetailsFood] = useState([]);
+  const [detailsFood, setDetailsFood] = useState({});
 
   const onClickSearch = async (type, item, page = '/foods') => {
     const strAlert = 'Sorry, we haven\'t found any recipes for these filters.';

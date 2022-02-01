@@ -5,9 +5,12 @@ import MyContext from '../context/Mycontext';
 
 function DetailedFood() {
   const { stateHook: { detailsFood, getDetailsFood } } = useContext(MyContext);
-  /* const [ingredients, setIngredients] = useState([]); */
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
+  const [ingredients, setIngredients] = useState([]);
+  const [video, setVideo] = useState('');
+
+  const ingredientsConst = [];
 
   useEffect(() => {
     const numbersID = -5;
@@ -16,20 +19,22 @@ function DetailedFood() {
   }, []);
 
   useEffect(() => {
-    if (detailsFood.length > 0) {
+    const numberItens = 20;
+    if (Object.keys(detailsFood).length !== 0) {
+      for (let index = 1; index <= numberItens; index += 1) {
+        const ingredient = detailsFood[`strIngredient${index}`];
+        const measure = detailsFood[`strMeasure${index}`];
+        if (ingredient) {
+          ingredientsConst.push(`${ingredient} - ${measure}`);
+        }
+      }
+      const linkVideo = detailsFood.strYoutube;
+      const codigoVideo = linkVideo.split('=');
+      setVideo(`https://www.youtube.com/embed/${codigoVideo[1]}`);
+      setIngredients(ingredientsConst);
       setIsLoading(true);
     }
   }, [detailsFood]);
-
-  /* useEffect(() => {
-    const numberItens = 20;
-    for (let index = 1; index <= numberItens; index += 1) {
-      setIngredients([
-        ...ingredients,
-        detailsFood[0][`strIngredient${index}`],
-      ]);
-    }
-  }, [detailsFood]); */
 
   return (
     <div>
@@ -37,11 +42,12 @@ function DetailedFood() {
         ? (
           <>
             <img
-              src={ detailsFood[0].strMealThumb }
+              src={ detailsFood.strMealThumb }
               alt="imagem da refeição"
               data-testid="recipe-photo"
             />
-            <h2 data-testid="recipe-title">{ detailsFood[0].strMeal }</h2>
+            <h2 data-testid="recipe-title">{ detailsFood.strMeal }</h2>
+            <h4 data-testid="recipe-category">{ detailsFood.strCategory }</h4>
             <button
               type="button"
               data-testid="share-btn"
@@ -54,12 +60,43 @@ function DetailedFood() {
             >
               Favoritar
             </button>
-            <p data-testid="recipe-category">
-              { detailsFood[0].strInstructions }
+            <p data-testid="recipe-instructions">
+              { detailsFood.strInstructions }
             </p>
             <ul>
-              {}
+              {ingredients.map((ingredient, i) => (
+                <li
+                  key={ i }
+                  data-testid={ `${i}-ingredient-name-and-measure` }
+                >
+                  {ingredient}
+                </li>
+              ))}
             </ul>
+            <iframe
+              data-testid="video"
+              width="560"
+              height="315"
+              src={ video }
+              title="YouTube video player"
+              allow="accelerometer;
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                gyroscope;
+                picture-in-picture"
+            />
+            <div
+              data-testid="recomendation-card"
+            >
+              Recomendações
+            </div>
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+            >
+              Iniciar Receita
+            </button>
           </>
         ) : <p>carregando...</p> }
     </div>
