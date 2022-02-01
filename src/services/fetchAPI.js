@@ -34,25 +34,51 @@ export const fetchDrinkAPI = async (type, item) => {
   return drinks;
 };
 
-// import { useEffect, useState } from 'react';
+export const fetchFoodInitial = async () => {
+  const URLFOOD = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  const response = await fetch(URLFOOD);
+  const { meals } = await response.json();
+  // console.log(meals);
+  return meals;
+};
 
-// function useRequestPlanets() {
-//   const URLStarWars = 'https://swapi-trybe.herokuapp.com/api/planets/';
-//   const [data, setData] = useState([]);
-//   // const [planet, setPlanets] = useState();
+export const fetchDrinksInitial = async () => {
+  const URLDRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  const response = await fetch(URLDRINKS);
+  const { drinks } = await response.json();
+  // console.log(meals);
+  return drinks;
+};
 
-//   const requestStarWars = async () => {
-//     const response = await fetch(URLStarWars);
-//     const dataPlanets = await response.json();
-//     // console.log(dataPlanets.results);
-//     setData(dataPlanets.results);
-//   };
+export const fetchCategoriesFood = async () => {
+  const URLDRINKS = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+  const response = await fetch(URLDRINKS);
+  const { meals } = await response.json();
+  // console.log(meals);
+  return meals;
+};
 
-//   useEffect(() => {
-//     // console.log('didmount');
-//     requestStarWars();
-//   }, []);
-//   return [data];
-// }
+export const fetchCategoriesDrink = async () => {
+  const URLDRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  const response = await fetch(URLDRINKS);
+  const { drinks } = await response.json();
+  return drinks;
+};
 
-// export default useRequestPlanets;
+export const fetchFilterCategory = async (item, type) => {
+  const URLFoods = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
+  const URLDrinks = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
+  if (type === 'food') {
+    const completeURL = `${URLFoods}${item}`;
+    const response = await fetch(completeURL);
+    const { meals } = await response.json();
+    // console.log(results);
+    return meals;
+  }
+  if (type === 'drinks') {
+    const completeURL = `${URLDrinks}${item}`;
+    const response = await fetch(completeURL);
+    const { drinks } = await response.json();
+    return drinks;
+  }
+};
