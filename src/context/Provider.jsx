@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './Mycontext';
-import { fetchDetailsFoodAPI } from '../services/fetchAPIDetails';
+import { fetchDetailsFoodAPI, fetchDetailsDrinksAPI } from '../services/fetchAPIDetails';
 import {
   fetchCategoriesDrink,
   fetchCategoriesFood,
@@ -10,7 +10,6 @@ import {
   fetchFilterCategory,
   fetchFoodAPI,
   fetchFoodInitial } from '../services/fetchAPI';
-
 
 export default function Provider({ children }) {
   const [isSearching, setIsSearching] = useState(false);
@@ -22,6 +21,7 @@ export default function Provider({ children }) {
   const [catFoods, setcatFoods] = useState('');
   const [catDrinks, setcatDrinks] = useState('');
   const [isRedirect, setisRedirect] = useState(false);
+  const [detailsDrinks, setDetailsDrinks] = useState({});
 
   const saveItemsAPI = async () => {
     const responseDrinks = await fetchDrinksInitial();
@@ -54,7 +54,6 @@ export default function Provider({ children }) {
     saveItemsAPI();
   }, []);
 
-
   const onClickSearch = async (type, item, page = '/foods') => {
     const strAlert = 'Sorry, we haven\'t found any recipes for these filters.';
     const { searchRadio } = type;
@@ -83,6 +82,11 @@ export default function Provider({ children }) {
     setDetailsFood(data);
   };
 
+  const getDetailsDrinks = async (id) => {
+    const data = await fetchDetailsDrinksAPI(id);
+    setDetailsDrinks(data);
+  };
+
   const stateHook = {
     isSearching,
     onClickSearch,
@@ -98,6 +102,8 @@ export default function Provider({ children }) {
     catDrinks,
     handleClick,
     isRedirect,
+    getDetailsDrinks,
+    detailsDrinks,
   };
 
   return (
