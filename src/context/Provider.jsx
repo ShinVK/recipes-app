@@ -77,13 +77,13 @@ export default function Provider({ children }) {
     setIsSearching(!isSearching);
   };
 
-  const getDetailsFood = async (id) => {
-    const data = await fetchDetailsFoodAPI(id);
+  const getDetailsFood = async (ide) => {
+    const data = await fetchDetailsFoodAPI(ide);
     setDetailsFood(data);
   };
 
-  const getDetailsDrinks = async (id) => {
-    const data = await fetchDetailsDrinksAPI(id);
+  const getDetailsDrinks = async (ide) => {
+    const data = await fetchDetailsDrinksAPI(ide);
     setDetailsDrinks(data);
   };
 

@@ -1,48 +1,56 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import PropTypes from 'prop-types';
+// import { useHistory } from 'react-router';
 import MyContext from '../context/Mycontext';
 import CarouselBotstrap from '../components/CarouselBotstrap';
+import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 // import PropTypes from 'prop-types';
 
-function DetailedFood() {
+function DetailedFood({ location: { pathname } }) {
   const {
     stateHook:
-    { detailsFood, getDetailsFood, drinksAPI } } = useContext(MyContext);
-  const history = useHistory();
+    { drinksAPI } } = useContext(MyContext);
+  // const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [video, setVideo] = useState('');
-
-  const ingredientsConst = [];
-
-  useEffect(() => {
-    // const history = useHistory();
-    const numbersID = -5;
-    const id = history.location.pathname.slice(numbersID);
-    getDetailsFood(id);
-  }, []);
+  const [detailItem] = useUpdateDetailRecipe(pathname, true);
+  const [detailFood, setdetailFood] = useState(detailItem);
 
   useEffect(() => {
+    setdetailFood(detailItem);
+  }, [detailItem]);
+
+  useEffect(() => {
+    const ingredientsConst = [];
     const numberItens = 20;
-    if (Object.keys(detailsFood).length !== 0) {
+    if (Object.keys(detailFood).length !== 0) {
       for (let index = 1; index <= numberItens; index += 1) {
-        const ingredient = detailsFood[`strIngredient${index}`];
-        const measure = detailsFood[`strMeasure${index}`];
+        const ingredient = detailFood[`strIngredient${index}`];
+        const measure = detailFood[`strMeasure${index}`];
         if (ingredient) {
           ingredientsConst.push(`${ingredient} - ${measure}`);
         }
       }
-      const linkVideo = detailsFood.strYoutube;
+      const linkVideo = detailFood.strYoutube;
       const codigoVideo = linkVideo.split('=');
       setVideo(`https://www.youtube.com/embed/${codigoVideo[1]}`);
       setIngredients(ingredientsConst);
       setIsLoading(true);
     }
-  }, [detailsFood]);
+  }, [detailFood]);
 
   const reduceArr = (arr, num) => {
     const arrRed = arr.slice(0, num);
     return arrRed;
+  };
+
+  const divideArray = (arr, num) => {
+    const arrFinal = [];
+    while (arr.length) {
+      arrFinal.push(arr.splice(0, num));
+    }
+    return arrFinal;
   };
 
   return (
@@ -51,14 +59,14 @@ function DetailedFood() {
         ? (
           <>
             <img
-              src={ detailsFood.strMealThumb }
+              src={ detailFood.strMealThumb }
               alt="imagem da refeição"
               data-testid="recipe-photo"
               width="280"
               height="155"
             />
-            <h2 data-testid="recipe-title">{ detailsFood.strMeal }</h2>
-            <h4 data-testid="recipe-category">{ detailsFood.strCategory }</h4>
+            <h2 data-testid="recipe-title">{ detailFood.strMeal }</h2>
+            <h4 data-testid="recipe-category">{ detailFood.strCategory }</h4>
             <button
               type="button"
               data-testid="share-btn"
@@ -71,8 +79,8 @@ function DetailedFood() {
             >
               Favoritar
             </button>
-            <p data-testid="recipe-instructions">
-              { detailsFood.strInstructions }
+            <p data-testid="instructions">
+              { detailFood.strInstructions }
             </p>
             <ul>
               {ingredients.map((ingredient, i) => (
@@ -97,7 +105,10 @@ function DetailedFood() {
                 gyroscope;
                 picture-in-picture"
             />
-            <CarouselBotstrap itensCar={ reduceArr(drinksAPI, +'6') } />
+            <CarouselBotstrap
+              itensCar={ divideArray(reduceArr(drinksAPI, +'6'), 2) }
+              foods={ false }
+            />
             <button
               type="button"
               data-testid="start-recipe-btn"
@@ -110,6 +121,8 @@ function DetailedFood() {
   );
 }
 
-// DetailedFood.propTypes = {};
+DetailedFood.propTypes = {
+  location: PropTypes.objectOf(Object).isRequired,
+};
 
 export default DetailedFood;

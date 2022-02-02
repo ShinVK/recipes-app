@@ -1,26 +1,33 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import PropTypes from 'prop-types';
+// import { useHistory } from 'react-router';
+import CarouselBotstrap from '../components/CarouselBotstrap';
 import MyContext from '../context/Mycontext';
+import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 // import PropTypes from 'prop-types';
 
-function DetailedDrink() {
+function DetailedDrink({ location: { pathname } }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
-  const history = useHistory();
-  const { stateHook: { getDetailsDrinks, detailsDrinks } } = useContext(MyContext);
+  const [detailItem] = useUpdateDetailRecipe(pathname, false);
+  const [detailsDrinks, setdetaildrinks] = useState(detailItem);
 
-  const ingredientsConst = [];
+  const {
+    stateHook: { foodsAPI } } = useContext(MyContext);
 
   useEffect(() => {
-    const numbersID = -5;
-    const id = history.location.pathname.slice(numbersID);
-    /* console.log(id);
-    console.log(fetchDetailsDrinksAPI(id)); */
-    getDetailsDrinks(id);
-  }, []);
+    setdetaildrinks(detailItem);
+  }, [detailItem]);
+
+  // useEffect(() => {
+  //   const numbersID = 8;
+  //   const id = history.location.pathname.slice(numbersID);
+  //   getDetailsDrinks(id);
+  // }, []);
 
   useEffect(() => {
     const numberItens = 20;
+    const ingredientsConst = [];
     if (Object.keys(detailsDrinks).length > 0) {
       for (let index = 1; index <= numberItens; index += 1) {
         const ingredient = detailsDrinks[`strIngredient${index}`];
@@ -33,6 +40,19 @@ function DetailedDrink() {
       setIsLoading(true);
     }
   }, [detailsDrinks]);
+
+  const reduceArr = (arr, num) => {
+    const arrRed = arr.slice(0, num);
+    return arrRed;
+  };
+
+  const divideArray = (arr, num) => {
+    const arrFinal = [];
+    while (arr.length) {
+      arrFinal.push(arr.splice(0, num));
+    }
+    return arrFinal;
+  };
 
   return (
     <div>
@@ -65,7 +85,7 @@ function DetailedDrink() {
             >
               Favoritar
             </button>
-            <p data-testid="recipe-instructions">
+            <p data-testid="instructions">
               { detailsDrinks.strInstructions }
             </p>
             <ul>
@@ -78,6 +98,10 @@ function DetailedDrink() {
                 </li>
               ))}
             </ul>
+            <CarouselBotstrap
+              itensCar={ divideArray(reduceArr(foodsAPI, +'6'), 2) }
+              foods
+            />
             <button
               type="button"
               data-testid="start-recipe-btn"
@@ -90,6 +114,8 @@ function DetailedDrink() {
   );
 }
 
-// DetailedDrink.propTypes = {};
+DetailedDrink.propTypes = {
+  location: PropTypes.objectOf(Object).isRequired,
+};
 
 export default DetailedDrink;
