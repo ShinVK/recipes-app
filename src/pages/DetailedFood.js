@@ -5,6 +5,8 @@ import MyContext from '../context/Mycontext';
 import CarouselBotstrap from '../components/CarouselBotstrap';
 import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 import BtnRecipe from '../components/BtnRecipe';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 // import PropTypes from 'prop-types';
 
 function DetailedFood({ location: { pathname } }) {
@@ -18,6 +20,7 @@ function DetailedFood({ location: { pathname } }) {
   const [detailItem, id] = useUpdateDetailRecipe(pathname, true);
   const [detailFood, setdetailFood] = useState(detailItem);
   const [isCopied, setisCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     setdetailFood(detailItem);
@@ -84,12 +87,19 @@ function DetailedFood({ location: { pathname } }) {
               Compartilhar
             </button>
             { isCopied && <span style={ { font: '10px' } }>Link copied!</span> }
-            <button
+            {/* <button
               type="button"
               data-testid="favorite-btn"
             >
               Favoritar
-            </button>
+            </button> */}
+            <input
+              data-testid="favorite-btn"
+              type="image"
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              alt="search icon"
+              onClick={ () => setIsFavorite(!isFavorite) }
+            />
             <p data-testid="instructions">
               { detailFood.strInstructions }
             </p>

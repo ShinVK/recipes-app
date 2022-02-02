@@ -1,13 +1,16 @@
 // import { Button } from 'bootstrap';
-import Button from 'react-bootstrap/Button';
 import React from 'react';
 // import PropTypes from 'prop-types';
 
 function BtnRecipe() {
   return (
-    <Button variant="secondary">
+    <button
+      type="button"
+      className="btn btn-primary"
+      data-testid="start-recipe-btn"
+    >
       Start Recipe
-    </Button>
+    </button>
   );
 }
 
