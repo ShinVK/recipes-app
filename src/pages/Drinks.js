@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { Redirect, useHistory } from 'react-router';
 // import { useHistory } from 'react-router';
 import AllHeader from '../components/AllHeader';
+import Footer from '../components/Footer';
 import MyContext from '../context/Mycontext';
 
 export default function Drinks({ history: { location } }) {
@@ -70,6 +71,7 @@ export default function Drinks({ history: { location } }) {
               </div>
             ))}
       </div>
+      <Footer />
     </div>
   );
 }
