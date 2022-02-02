@@ -5,13 +5,18 @@ import CarouselBotstrap from '../components/CarouselBotstrap';
 import MyContext from '../context/Mycontext';
 import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 import BtnRecipe from '../components/BtnRecipe';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+
 // import PropTypes from 'prop-types';
 
 function DetailedDrink({ location: { pathname } }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
-  const [detailItem] = useUpdateDetailRecipe(pathname, false);
+  const [detailItem, id] = useUpdateDetailRecipe(pathname, false);
   const [detailsDrinks, setdetaildrinks] = useState(detailItem);
+  const [isCopied, setisCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const {
     stateHook: { foodsAPI } } = useContext(MyContext);
@@ -19,6 +24,11 @@ function DetailedDrink({ location: { pathname } }) {
   useEffect(() => {
     setdetaildrinks(detailItem);
   }, [detailItem]);
+
+  const copyClipBoard = () => {
+    navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`);
+    setisCopied(!isCopied);
+  };
 
   // useEffect(() => {
   //   const numbersID = 8;
@@ -77,15 +87,23 @@ function DetailedDrink({ location: { pathname } }) {
             <button
               type="button"
               data-testid="share-btn"
+              onClick={ () => copyClipBoard() }
             >
               Compartilhar
             </button>
-            <button
+            { isCopied && <span style={ { font: '10px' } }>Link copied!</span> }
+            {/* <button
               type="button"
-              data-testid="favorite-btn"
             >
               Favoritar
-            </button>
+            </button> */}
+            <input
+              data-testid="favorite-btn"
+              type="image"
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              alt="search icon"
+              onClick={ () => setIsFavorite(!isFavorite) }
+            />
             <p data-testid="instructions">
               { detailsDrinks.strInstructions }
             </p>
