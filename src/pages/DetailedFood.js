@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import MyContext from '../context/Mycontext';
 import CarouselBotstrap from '../components/CarouselBotstrap';
 import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
+import BtnRecipe from '../components/BtnRecipe';
 // import PropTypes from 'prop-types';
 
 function DetailedFood({ location: { pathname } }) {
@@ -109,12 +110,13 @@ function DetailedFood({ location: { pathname } }) {
               itensCar={ divideArray(reduceArr(drinksAPI, +'6'), 2) }
               foods={ false }
             />
-            <button
+            <BtnRecipe />
+            {/* <button
               type="button"
               data-testid="start-recipe-btn"
             >
               Start Recipe
-            </button>
+            </button> */}
           </>
         ) : <p>carregando...</p> }
     </div>

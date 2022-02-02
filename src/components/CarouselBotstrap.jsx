@@ -8,7 +8,6 @@ export default function CarouselBotstrap({ itensCar, foods }) {
   const [index, setindex] = useState(0);
 
   const handleSelect = () => {
-    console.log(index);
     if (index === +'2') return setindex(0);
 
     setindex((prev) => (prev + 1));
@@ -23,7 +22,6 @@ export default function CarouselBotstrap({ itensCar, foods }) {
   //   }
   //   return arrFinal;
   // };
-
   // console.log(divideArray(itensCar, 2));
 
   return (

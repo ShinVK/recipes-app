@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './Mycontext';
-import { fetchDetailsFoodAPI, fetchDetailsDrinksAPI } from '../services/fetchAPIDetails';
+// import { fetchDetailsFoodAPI, fetchDetailsDrinksAPI } from '../services/fetchAPIDetails';
 import {
   fetchCategoriesDrink,
   fetchCategoriesFood,
@@ -15,13 +15,13 @@ export default function Provider({ children }) {
   const [isSearching, setIsSearching] = useState(false);
   const [foodsAPI, setfoodsAPI] = useState([]);
   const [drinksAPI, setdrinksAPI] = useState([]);
-  const [detailsFood, setDetailsFood] = useState({});
+  // const [detailsFood, setDetailsFood] = useState({});
   const [categoriesFood, setcategoriesFood] = useState([]);
   const [categoriesDrinks, setcategoriesDrinks] = useState([]);
   const [catFoods, setcatFoods] = useState('');
   const [catDrinks, setcatDrinks] = useState('');
   const [isRedirect, setisRedirect] = useState(false);
-  const [detailsDrinks, setDetailsDrinks] = useState({});
+  // const [detailsDrinks, setDetailsDrinks] = useState({});
 
   const saveItemsAPI = async () => {
     const responseDrinks = await fetchDrinksInitial();
@@ -77,15 +77,15 @@ export default function Provider({ children }) {
     setIsSearching(!isSearching);
   };
 
-  const getDetailsFood = async (ide) => {
-    const data = await fetchDetailsFoodAPI(ide);
-    setDetailsFood(data);
-  };
+  // const getDetailsFood = async (ide) => {
+  //   const data = await fetchDetailsFoodAPI(ide);
+  //   setDetailsFood(data);
+  // };
 
-  const getDetailsDrinks = async (ide) => {
-    const data = await fetchDetailsDrinksAPI(ide);
-    setDetailsDrinks(data);
-  };
+  // const getDetailsDrinks = async (ide) => {
+  //   const data = await fetchDetailsDrinksAPI(ide);
+  //   setDetailsDrinks(data);
+  // };
 
   const stateHook = {
     isSearching,
@@ -94,16 +94,14 @@ export default function Provider({ children }) {
     foodsAPI,
     // setactPage,
     drinksAPI,
-    getDetailsFood,
-    detailsFood,
+    // getDetailsFood,
+    // detailsFood,
     categoriesDrinks,
     categoriesFood,
     catFoods,
     catDrinks,
     handleClick,
     isRedirect,
-    getDetailsDrinks,
-    detailsDrinks,
   };
 
   return (
