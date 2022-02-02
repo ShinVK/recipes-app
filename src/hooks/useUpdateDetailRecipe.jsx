@@ -15,5 +15,5 @@ export default function useUpdateDetailRecipe(path, isFood) {
     requestDetailItem();
   }, [id, isFood]);
 
-  return [detailItem];
+  return [detailItem, id];
 }

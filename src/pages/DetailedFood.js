@@ -15,12 +15,19 @@ function DetailedFood({ location: { pathname } }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [video, setVideo] = useState('');
-  const [detailItem] = useUpdateDetailRecipe(pathname, true);
+  const [detailItem, id] = useUpdateDetailRecipe(pathname, true);
   const [detailFood, setdetailFood] = useState(detailItem);
+  const [isCopied, setisCopied] = useState(false);
 
   useEffect(() => {
     setdetailFood(detailItem);
   }, [detailItem]);
+
+  // https://stackoverflow.com/questions/61092432/display-success-message-after-copying-url-to-clipboard
+  const copyClipBoard = () => {
+    navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
+    setisCopied(!isCopied);
+  };
 
   useEffect(() => {
     const ingredientsConst = [];
@@ -71,9 +78,12 @@ function DetailedFood({ location: { pathname } }) {
             <button
               type="button"
               data-testid="share-btn"
+              className="btn btn-primary"
+              onClick={ () => copyClipBoard() }
             >
               Compartilhar
             </button>
+            { isCopied && <span style={ { font: '10px' } }>Link copied!</span> }
             <button
               type="button"
               data-testid="favorite-btn"
