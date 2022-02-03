@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import AllHeader from '../components/AllHeader';
 import Footer from '../components/Footer';
 
 export default function Profile() {
   const history = useHistory();
-  const { email } = JSON.parse(localStorage.user);
+  const [email, setEmail] = useState('');
+  /* const { email } = JSON.parse(localStorage.user); */
+  /* const { email } = JSON.parse(localStorage.getItem('user')); */
+
+  useEffect(() => {
+    if (localStorage.getItem('user')) { setEmail(JSON.parse(localStorage.user).email); }
+  }, []);
+
   return (
     <div>
-      <AllHeader title="Profile" btnSearch={ false } />
+      <AllHeader actPage="" title="Profile" btnSearch={ false } />
       <p>Tela de perfil</p>
       <h4
         data-testid="profile-email"
