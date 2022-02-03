@@ -38,9 +38,9 @@ export default function Provider({ children }) {
       setfoodsAPI(results);
     } if (page === 'drinks') {
       if (catDrinks === value || value === 'all') return setdrinksAPI(defaultDrinks);
-      setcatDrinks(value);
       const results = await fetchFilterCategory(value, page);
       setdrinksAPI(results);
+      setcatDrinks(value);
     }
   };
 
