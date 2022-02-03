@@ -19,14 +19,13 @@ export default function useCatchIngredients(arr, id) {
         setIngredients2(ingredientsConst);
       }
       const arrListSteps = localStorage.recipesInprogress;
-      if (!arrListSteps) {
+      const entriesArr = Object.entries(JSON.parse(arrListSteps));
+      const existId = entriesArr.some((el) => el[0] === id2);
+      if (!arrListSteps || !existId) {
         setSteps2(new Array(ingredientsConst.length).fill(false));
       } else {
-        const entriesArr = Object.entries(JSON.parse(arrListSteps));
         const idAct = entriesArr.filter((el) => el[0] === id2);
-        const result = idAct ? idAct[0][1]
-          : new Array(ingredientsConst.length).fill(false);
-        setSteps2(result);
+        setSteps2(idAct[0][1]);
       }
     };
     catchIngredients(arr, id);

@@ -9,7 +9,6 @@ import { saveRecipesInProgess } from '../services/localStorage';
 
 function FoodsInProgress({ location: { pathname } }) {
   const [detailItem, id] = useUpdateDetailRecipe(pathname, true);
-  // const [isCopied, setisCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [steps, setSteps] = useState();
