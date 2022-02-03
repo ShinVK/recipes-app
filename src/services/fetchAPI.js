@@ -29,40 +29,51 @@ export const fetchDrinkAPI = async (type, item) => {
   const URLBase = 'https://www.thecocktaildb.com/api/json/';
   const endPoint = filterType(type);
   const URLComplete = `${URLBase}${endPoint}${item}`;
-  const response = await fetch(URLComplete);
-  const { drinks } = await response.json();
-  return drinks;
+  try {
+    const response = await fetch(URLComplete);
+    const { drinks } = await response.json();
+    return drinks;
+  } catch (error) { console.log(error); }
 };
 
 export const fetchFoodInitial = async () => {
   const URLFOOD = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-  const response = await fetch(URLFOOD);
-  const { meals } = await response.json();
-  // console.log(meals);
-  return meals;
+  try {
+    const response = await fetch(URLFOOD);
+    const { meals } = await response.json();
+    // console.log(meals);
+    return meals;
+  } catch (error) { console.log(error); }
 };
 
 export const fetchDrinksInitial = async () => {
   const URLDRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-  const response = await fetch(URLDRINKS);
-  const { drinks } = await response.json();
+  try {
+    const response = await fetch(URLDRINKS);
+    const { drinks } = await response.json();
+    return drinks;
+  } catch (error) { console.log(error); }
   // console.log(meals);
-  return drinks;
 };
 
 export const fetchCategoriesFood = async () => {
   const URLDRINKS = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
-  const response = await fetch(URLDRINKS);
-  const { meals } = await response.json();
-  // console.log(meals);
-  return meals;
+
+  try {
+    const response = await fetch(URLDRINKS);
+    const { meals } = await response.json();
+    // console.log(meals);
+    return meals;
+  } catch (error) { console.log(error); }
 };
 
 export const fetchCategoriesDrink = async () => {
   const URLDRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
-  const response = await fetch(URLDRINKS);
-  const { drinks } = await response.json();
-  return drinks;
+  try {
+    const response = await fetch(URLDRINKS);
+    const { drinks } = await response.json();
+    return drinks;
+  } catch (error) { console.log(error); }
 };
 
 export const fetchFilterCategory = async (item, type) => {
@@ -70,15 +81,19 @@ export const fetchFilterCategory = async (item, type) => {
   const URLDrinks = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
   if (type === 'food') {
     const completeURL = `${URLFoods}${item}`;
-    const response = await fetch(completeURL);
-    const { meals } = await response.json();
-    // console.log(results);
-    return meals;
+    try {
+      const response = await fetch(completeURL);
+      const { meals } = await response.json();
+      // console.log(results);
+      return meals;
+    } catch (error) { console.log(error); }
   }
   if (type === 'drinks') {
     const completeURL = `${URLDrinks}${item}`;
-    const response = await fetch(completeURL);
-    const { drinks } = await response.json();
-    return drinks;
+    try {
+      const response = await fetch(completeURL);
+      const { drinks } = await response.json();
+      return drinks;
+    } catch (error) { console.log(error); }
   }
 };
