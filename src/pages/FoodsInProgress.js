@@ -5,6 +5,7 @@ import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import useCatchIngredients from '../hooks/useCatchIngredients';
+import { saveRecipesInProgess } from '../services/localStorage';
 
 function FoodsInProgress({ location: { pathname } }) {
   const [detailItem, id] = useUpdateDetailRecipe(pathname, true);
@@ -12,7 +13,7 @@ function FoodsInProgress({ location: { pathname } }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [steps, setSteps] = useState();
-  const [ingredients2, steps2] = useCatchIngredients(detailItem);
+  const [ingredients2, steps2] = useCatchIngredients(detailItem, id);
 
   const {
     stateHook:
@@ -31,6 +32,8 @@ function FoodsInProgress({ location: { pathname } }) {
 
   const onHandleChange = (i2) => {
     const updatedCheckedStep = steps.map((step, i) => (i === i2 ? !step : step));
+    const objLocal = { [id]: updatedCheckedStep };
+    saveRecipesInProgess(objLocal);
     setSteps(updatedCheckedStep);
   };
 
