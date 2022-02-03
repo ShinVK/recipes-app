@@ -1,15 +1,15 @@
 import React from 'react';
-// import AllHeader from '../components/AllHeader';
 
 import { useHistory } from 'react-router-dom';
+import AllHeader from '../components/AllHeader';
+import Footer from '../components/Footer';
 
 export default function Explorar() {
   const history = useHistory();
 
   return (
     <div>
-      {/* <AllHeader title="Explore" btnSearch={ false } /> */}
-      {/* <p>Tela Principal</p> */}
+      <AllHeader title="Explore" btnSearch={ false } />
       <button
         type="button"
         data-testid="explore-foods"
@@ -24,6 +24,7 @@ export default function Explorar() {
       >
         Explore Drinks
       </button>
+      <Footer />
     </div>
   );
 }
