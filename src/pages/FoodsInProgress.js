@@ -4,41 +4,36 @@ import MyContext from '../context/Mycontext';
 import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import useCatchIngredients from '../hooks/useCatchIngredients';
 
 function FoodsInProgress({ location: { pathname } }) {
   const [detailItem, id] = useUpdateDetailRecipe(pathname, true);
-  const [isCopied, setisCopied] = useState(false);
+  // const [isCopied, setisCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
-  const [steps, setSteps] = useState({});
+  const [steps, setSteps] = useState();
+  const [ingredients2, steps2] = useCatchIngredients(detailItem);
 
   const {
     stateHook:
     {
       isFavorite,
       handleClickFavorite,
+      isCopied,
+      copyClipBoard,
     } } = useContext(MyContext);
 
   useEffect(() => {
-    const ingredientsConst = [];
-    const numberItens = 20;
-    if (Object.keys(detailItem).length !== 0) {
-      for (let index = 1; index <= numberItens; index += 1) {
-        const ingredient = detailItem[`strIngredient${index}`];
-        const measure = detailItem[`strMeasure${index}`];
-        if (ingredient) {
-          ingredientsConst.push(`${ingredient} - ${measure}`);
-        }
-      }
-      setIngredients(ingredientsConst);
-      setIsLoading(true);
-    }
-  }, [detailItem]);
+    setIngredients(ingredients2);
+    setSteps(steps2);
+    setIsLoading(true);
+  }, [ingredients2, steps2]);
 
-  const copyClipBoard = () => {
-    navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
-    setisCopied(!isCopied);
+  const onHandleChange = (i2) => {
+    const updatedCheckedStep = steps.map((step, i) => (i === i2 ? !step : step));
+    setSteps(updatedCheckedStep);
   };
+
   return (
     <div className="container">
       { isLoading
@@ -75,7 +70,11 @@ function FoodsInProgress({ location: { pathname } }) {
 
             {ingredients.map((ingredient, i) => (
               <div className="form-check" key={ i }>
-                <label className="form-check-label" htmlFor={ `${i}-input` }>
+                <label
+                  className={ (steps[i])
+                    ? 'checked_text form-check-label' : 'form-check-label' }
+                  htmlFor={ `${i}-input` }
+                >
 
                   <input
                     className="form-check-input"
@@ -83,10 +82,8 @@ function FoodsInProgress({ location: { pathname } }) {
                     data-testid={ `${i}-ingredient-step` }
                     type="checkbox"
                     name={ `step${i}` }
-                    checked={ steps[`step${i}`] }
-                    onChange={
-                      ({ target }) => setSteps({ ...steps, [target.name]: true })
-                    }
+                    checked={ steps[i] }
+                    onChange={ () => onHandleChange(i) }
                   />
                   {ingredient}
                 </label>

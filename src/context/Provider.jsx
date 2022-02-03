@@ -23,6 +23,7 @@ export default function Provider({ children }) {
   const [isFavorite, setIsFavorite] = useState('');
   const [actURL, setActUrl] = useState('');
   const history = useHistory();
+  const [isCopied, setisCopied] = useState(false);
 
   const handleClick = async ({ target }, page) => {
     const { value } = target;
@@ -111,6 +112,11 @@ export default function Provider({ children }) {
     setIsFavorite(!isFavorite);
   };
 
+  const copyClipBoard = () => {
+    navigator.clipboard.writeText(`http://localhost:3000/${actURL}`);
+    setisCopied(!isCopied);
+  };
+
   const stateHook = {
     isSearching,
     onClickSearch,
@@ -128,7 +134,8 @@ export default function Provider({ children }) {
     handleClickRedirect,
     isFavorite,
     handleClickFavorite,
-    actURL,
+    isCopied,
+    copyClipBoard,
   };
 
   return (

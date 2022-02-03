@@ -27,3 +27,7 @@ body {
   flex-wrap: nowrap;
   width: 300px;
 }
+
+.checked_text {
+  text-decoration: line-through;
+}
