@@ -6,7 +6,8 @@ import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import useCatchIngredients from '../hooks/useCatchIngredients';
-import { saveRecipesInProgess } from '../services/localStorage';
+import { saveRecipesDone, saveRecipesInProgess } from '../services/localStorage';
+import { foodsDone } from '../services/favRecipes';
 
 function FoodsInProgress({ location: { pathname } }) {
   const {
@@ -48,6 +49,12 @@ function FoodsInProgress({ location: { pathname } }) {
     const objLocal = { [id]: updatedCheckedStep };
     saveRecipesInProgess(objLocal);
     setSteps(updatedCheckedStep);
+  };
+
+  const handleClickDone = (obj) => {
+    const itemDone = foodsDone(obj);
+    saveRecipesDone(itemDone);
+    history.push('/done-recipes');
   };
 
   return (
@@ -114,7 +121,7 @@ function FoodsInProgress({ location: { pathname } }) {
               type="button"
               data-testid="finish-recipe-btn"
               disabled={ disable }
-              onClick={ () => history.push('/done-recipes') }
+              onClick={ () => handleClickDone(detailItem) }
             >
               Done!
             </button>

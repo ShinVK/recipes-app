@@ -21,3 +21,13 @@ export const saveRecipesInProgess = (obj) => {
     localStorage.setItem('recipesInprogress', JSON.stringify(obj));
   }
 };
+
+export const saveRecipesDone = (obj) => {
+  if (localStorage.doneRecipes) {
+    const arrRecipesFinished = JSON.parse(localStorage.doneRecipes);
+    arrRecipesFinished.push(obj);
+    localStorage.setItem('doneRecipes', JSON.stringify(arrRecipesFinished));
+  } else {
+    localStorage.setItem('doneRecipes', JSON.stringify([obj]));
+  }
+};

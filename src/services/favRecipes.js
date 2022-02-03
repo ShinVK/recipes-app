@@ -1,4 +1,5 @@
 import { saveFavoriteRecipes } from './localStorage';
+import dataAtual from './supportFunctions';
 
 export const foodObj = (obj) => {
   const { idMeal, strArea, strCategory, strMeal, strMealThumb } = obj;
@@ -47,4 +48,34 @@ export const recipeFavorite = (idMeal) => {
     const isFav = arrRecipes.some(({ id }) => id === idMeal);
     return isFav;
   } return false;
+};
+
+export const foodsDone = (obj) => {
+  const { idMeal, strArea, strCategory, strMeal, strMealThumb, strTags } = obj;
+  return {
+    id: idMeal,
+    type: 'food',
+    nationality: strArea,
+    category: strCategory,
+    alcoholicOrNot: '',
+    name: strMeal,
+    image: strMealThumb,
+    doneDate: dataAtual(),
+    tags: strTags.split(','),
+  };
+};
+
+export const drinkDone = (obj) => {
+  const { idDrink, strCategory, strAlcoholic, strDrink, strTags, strDrinkThumb } = obj;
+  return {
+    id: idDrink,
+    type: 'drink',
+    nationality: '',
+    category: strCategory,
+    alcoholicOrNot: strAlcoholic,
+    name: strDrink,
+    image: strDrinkThumb,
+    doneDate: dataAtual(),
+    tags: strTags ? strTags.split(',') : [],
+  };
 };

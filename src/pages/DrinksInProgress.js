@@ -6,7 +6,8 @@ import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import useCatchIngredients from '../hooks/useCatchIngredients';
-import { saveRecipesInProgess } from '../services/localStorage';
+import { saveRecipesDone, saveRecipesInProgess } from '../services/localStorage';
+import { drinkDone } from '../services/favRecipes';
 
 function DrinksInProgress({ location: { pathname } }) {
   const {
@@ -50,6 +51,12 @@ function DrinksInProgress({ location: { pathname } }) {
 
     saveRecipesInProgess(objLocal);
     setSteps(updatedCheckedStep);
+  };
+
+  const handleClickDone = (obj) => {
+    const itemDone = drinkDone(obj);
+    saveRecipesDone(itemDone);
+    history.push('/done-recipes');
   };
 
   return (
@@ -117,7 +124,7 @@ function DrinksInProgress({ location: { pathname } }) {
               type="button"
               data-testid="finish-recipe-btn"
               disabled={ disable }
-              onClick={ () => history.push('/done-recipes') }
+              onClick={ () => handleClickDone(detailItem) }
             >
               Finish Recipe
             </button>
