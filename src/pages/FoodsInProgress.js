@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import MyContext from '../context/Mycontext';
 import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -8,12 +9,6 @@ import useCatchIngredients from '../hooks/useCatchIngredients';
 import { saveRecipesInProgess } from '../services/localStorage';
 
 function FoodsInProgress({ location: { pathname } }) {
-  const [detailItem, id] = useUpdateDetailRecipe(pathname, true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [ingredients, setIngredients] = useState([]);
-  const [steps, setSteps] = useState();
-  const [ingredients2, steps2] = useCatchIngredients(detailItem, id);
-
   const {
     stateHook:
     {
@@ -21,7 +16,26 @@ function FoodsInProgress({ location: { pathname } }) {
       handleClickFavorite,
       isCopied,
       copyClipBoard,
+      actStatus,
     } } = useContext(MyContext);
+  const [detailItem, id] = useUpdateDetailRecipe(pathname, true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [ingredients, setIngredients] = useState([]);
+  const [steps, setSteps] = useState();
+  const [ingredients2, steps2] = useCatchIngredients(detailItem, actStatus, id);
+  const [disable, setDisable] = useState(true);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    const verifyChecks = (a) => {
+      if (a) {
+        const isDisable = a.some((e) => e === false);
+        setDisable(isDisable);
+      } else { setDisable(true); }
+    };
+    verifyChecks(steps);
+  }, [steps]);
 
   useEffect(() => {
     setIngredients(ingredients2);
@@ -71,18 +85,22 @@ function FoodsInProgress({ location: { pathname } }) {
             </p>
 
             {ingredients.map((ingredient, i) => (
-              <div className="form-check" key={ i }>
+              <div
+                className="form-check"
+                key={ i }
+                data-testid={ `${i}-ingredient-step` }
+              >
                 <label
+                  key={ i }
                   className={ (steps[i])
                     ? 'checked_text form-check-label' : 'form-check-label' }
                   htmlFor={ `${i}-input` }
                 >
 
                   <input
+                    type="checkbox"
                     className="form-check-input"
                     id={ `${i}-input` }
-                    data-testid={ `${i}-ingredient-step` }
-                    type="checkbox"
                     name={ `step${i}` }
                     checked={ steps[i] }
                     onChange={ () => onHandleChange(i) }
@@ -94,7 +112,9 @@ function FoodsInProgress({ location: { pathname } }) {
 
             <button
               type="button"
-              data-testid="done-recipe-btn"
+              data-testid="finish-recipe-btn"
+              disabled={ disable }
+              onClick={ () => history.push('/done-recipes') }
             >
               Done!
             </button>

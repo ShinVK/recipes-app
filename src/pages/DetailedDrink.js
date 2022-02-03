@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-// import { useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 import CarouselBotstrap from '../components/CarouselBotstrap';
 import MyContext from '../context/Mycontext';
 import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
@@ -17,6 +17,8 @@ function DetailedDrink({ location: { pathname } }) {
   const {
     stateHook: { foodsAPI, isFavorite,
       handleClickFavorite } } = useContext(MyContext);
+
+  const history = useHistory();
 
   useEffect(() => {
     setdetaildrinks(detailItem);
@@ -109,6 +111,7 @@ function DetailedDrink({ location: { pathname } }) {
             <button
               type="button"
               data-testid="start-recipe-btn"
+              onClick={ () => history.push(`${pathname}/in-progress`) }
             >
               Start Recipe
             </button>

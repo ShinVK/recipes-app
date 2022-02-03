@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-export default function useCatchIngredients(arr, id) {
+export default function useCatchIngredients(arr, status2, id) {
   const [ingredients2, setIngredients2] = useState([]);
   const [steps2, setSteps2] = useState();
 
   useEffect(() => {
-    const catchIngredients = (arr2, id2) => {
+    const catchIngredients = (arr2, status, id2) => {
       const ingredientsConst = [];
       const numberItens = 20;
       if (Object.keys(arr2).length !== 0) {
@@ -18,18 +18,17 @@ export default function useCatchIngredients(arr, id) {
         }
         setIngredients2(ingredientsConst);
       }
-      const arrListSteps = localStorage.recipesInprogress;
-      const entriesArr = Object.entries(JSON.parse(arrListSteps));
-      const existId = entriesArr.some((el) => el[0] === id2);
-      if (!arrListSteps || !existId) {
-        setSteps2(new Array(ingredientsConst.length).fill(false));
-      } else {
+      if (status) {
+        const arrListSteps = localStorage.recipesInprogress;
+        const entriesArr = Object.entries(JSON.parse(arrListSteps));
         const idAct = entriesArr.filter((el) => el[0] === id2);
         setSteps2(idAct[0][1]);
+      } else {
+        setSteps2(new Array(ingredientsConst.length).fill(false));
       }
     };
-    catchIngredients(arr, id);
-  }, [arr, id]);
+    catchIngredients(arr, status2, id);
+  }, [arr, id, status2]);
 
   return [ingredients2, steps2];
 }
