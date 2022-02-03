@@ -8,18 +8,16 @@ import BtnRecipe from '../components/BtnRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
-// import PropTypes from 'prop-types';
-
 function DetailedDrink({ location: { pathname } }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [detailItem, id] = useUpdateDetailRecipe(pathname, false);
   const [detailsDrinks, setdetaildrinks] = useState(detailItem);
   const [isCopied, setisCopied] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   const {
-    stateHook: { foodsAPI } } = useContext(MyContext);
+    stateHook: { foodsAPI, isFavorite,
+      handleClickFavorite } } = useContext(MyContext);
 
   useEffect(() => {
     setdetaildrinks(detailItem);
@@ -29,12 +27,6 @@ function DetailedDrink({ location: { pathname } }) {
     navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`);
     setisCopied(!isCopied);
   };
-
-  // useEffect(() => {
-  //   const numbersID = 8;
-  //   const id = history.location.pathname.slice(numbersID);
-  //   getDetailsDrinks(id);
-  // }, []);
 
   useEffect(() => {
     const numberItens = 20;
@@ -92,17 +84,12 @@ function DetailedDrink({ location: { pathname } }) {
               Compartilhar
             </button>
             { isCopied && <span style={ { font: '10px' } }>Link copied!</span> }
-            {/* <button
-              type="button"
-            >
-              Favoritar
-            </button> */}
             <input
               data-testid="favorite-btn"
               type="image"
               src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
               alt="search icon"
-              onClick={ () => setIsFavorite(!isFavorite) }
+              onClick={ () => handleClickFavorite(id, detailItem, false) }
             />
             <p data-testid="instructions">
               { detailsDrinks.strInstructions }

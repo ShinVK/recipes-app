@@ -1,58 +1,84 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory, useLocation } from 'react-router';
 import MyContext from './Mycontext';
-// import { fetchDetailsFoodAPI, fetchDetailsDrinksAPI } from '../services/fetchAPIDetails';
 import {
-  fetchCategoriesDrink,
-  fetchCategoriesFood,
   fetchDrinkAPI,
-  fetchDrinksInitial,
   fetchFilterCategory,
   fetchFoodAPI,
-  fetchFoodInitial } from '../services/fetchAPI';
+} from '../services/fetchAPI';
+import useRecipesAPI from '../hooks/useRecipesAPI';
+import { drinkObj, filterLocalStorage, foodObj } from '../services/favRecipes';
+import { saveFavoriteRecipes } from '../services/localStorage';
 
 export default function Provider({ children }) {
   const [isSearching, setIsSearching] = useState(false);
-  const [foodsAPI, setfoodsAPI] = useState([]);
-  const [drinksAPI, setdrinksAPI] = useState([]);
-  // const [detailsFood, setDetailsFood] = useState({});
-  const [categoriesFood, setcategoriesFood] = useState([]);
-  const [categoriesDrinks, setcategoriesDrinks] = useState([]);
+  const [foodCat, drinksCat, defaultDrinks, defaultFoods] = useRecipesAPI();
+  const [foodsAPI, setfoodsAPI] = useState(defaultFoods);
+  const [drinksAPI, setdrinksAPI] = useState(defaultDrinks);
   const [catFoods, setcatFoods] = useState('');
   const [catDrinks, setcatDrinks] = useState('');
   const [isRedirect, setisRedirect] = useState(false);
-  // const [detailsDrinks, setDetailsDrinks] = useState({});
-
-  const saveItemsAPI = async () => {
-    const responseDrinks = await fetchDrinksInitial();
-    const response = await fetchFoodInitial();
-    const categFoods = await fetchCategoriesFood();
-    const categDrinks = await fetchCategoriesDrink();
-    setcategoriesDrinks(categDrinks);
-    setcategoriesFood(categFoods);
-    setfoodsAPI(response);
-    setdrinksAPI(responseDrinks);
-  };
+  const [idItem, setidItem] = useState('');
+  const [isFavorite, setIsFavorite] = useState('');
+  const [actURL, setActUrl] = useState('');
+  const history = useHistory();
 
   const handleClick = async ({ target }, page) => {
     const { value } = target;
     setisRedirect(false);
     if (page === 'food') {
-      if (catFoods === value || value === 'all') return saveItemsAPI();
+      if (catFoods === value || value === 'all') return setfoodsAPI(defaultFoods);
       setcatFoods((value));
       const results = await fetchFilterCategory(value, page);
       setfoodsAPI(results);
     } if (page === 'drinks') {
-      if (catDrinks === value || value === 'all') return saveItemsAPI();
+      if (catDrinks === value || value === 'all') return setdrinksAPI(defaultDrinks);
       setcatDrinks(value);
       const results = await fetchFilterCategory(value, page);
       setdrinksAPI(results);
     }
   };
 
+  const location = useLocation();
   useEffect(() => {
-    saveItemsAPI();
-  }, []);
+    setActUrl(location.pathname);
+    const idFromUrl = location.pathname.replace(/[^0-9]/g, '');
+    if (idFromUrl.length > +'3') { setidItem(idFromUrl); }
+    // console.log(location);
+  }, [location]);
+
+  const handleClickRedirect = (id) => {
+    setidItem(id);
+    if (actURL.includes('food')) {
+      history.push(`/foods/${id}`);
+    } else {
+      history.push(`/drinks/${id}`);
+    }
+  };
+
+  useEffect(() => {
+    const recipeFavorite = (idMeal) => {
+      if (localStorage.favoriteRecipes) {
+        console.log('entrei');
+        const arrRecipes = JSON.parse(localStorage.favoriteRecipes);
+        const isFav = arrRecipes.some(({ id }) => id === idMeal);
+        setIsFavorite(isFav);
+      } else { setIsFavorite(false); }
+    };
+    recipeFavorite(idItem);
+  }, [idItem]);
+
+  useEffect(() => {
+    let updateItems = true;
+    if (updateItems) {
+      setfoodsAPI(defaultFoods);
+      setdrinksAPI(defaultDrinks);
+    }
+    return () => {
+      updateItems = false;
+    };
+  }, [defaultFoods, defaultDrinks]);
 
   const onClickSearch = async (type, item, page = '/foods') => {
     const strAlert = 'Sorry, we haven\'t found any recipes for these filters.';
@@ -77,31 +103,35 @@ export default function Provider({ children }) {
     setIsSearching(!isSearching);
   };
 
-  // const getDetailsFood = async (ide) => {
-  //   const data = await fetchDetailsFoodAPI(ide);
-  //   setDetailsFood(data);
-  // };
-
-  // const getDetailsDrinks = async (ide) => {
-  //   const data = await fetchDetailsDrinksAPI(ide);
-  //   setDetailsDrinks(data);
-  // };
+  const handleClickFavorite = (id, obj, isFood = true) => {
+    // console.log('teste');
+    if (!isFavorite) {
+      const recipeFav = (isFood) ? foodObj(obj) : drinkObj(obj);
+      saveFavoriteRecipes(recipeFav);
+    } else {
+      filterLocalStorage(id);
+    }
+    setIsFavorite(!isFavorite);
+  };
 
   const stateHook = {
     isSearching,
     onClickSearch,
     showSearchInput,
     foodsAPI,
-    // setactPage,
     drinksAPI,
-    // getDetailsFood,
-    // detailsFood,
-    categoriesDrinks,
-    categoriesFood,
+    categoriesDrinks: drinksCat,
+    categoriesFood: foodCat,
     catFoods,
     catDrinks,
     handleClick,
     isRedirect,
+    setidItem,
+    idItem,
+    handleClickRedirect,
+    isFavorite,
+    handleClickFavorite,
+    actURL,
   };
 
   return (

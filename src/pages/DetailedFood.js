@@ -7,26 +7,31 @@ import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 import BtnRecipe from '../components/BtnRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+// import { foodObj } from '../services/favRecipes';
+// import { saveFavoriteRecipes } from '../services/localStorage';
+// import useIsFavorite from '../hooks/useIsFavorite';
+// import BtnFav from '../components/BtnFav';
 // import PropTypes from 'prop-types';
 
 function DetailedFood({ location: { pathname } }) {
   const {
     stateHook:
-    { drinksAPI } } = useContext(MyContext);
-  // const history = useHistory();
+    {
+      drinksAPI,
+      isFavorite,
+      handleClickFavorite,
+    } } = useContext(MyContext);
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [video, setVideo] = useState('');
   const [detailItem, id] = useUpdateDetailRecipe(pathname, true);
   const [detailFood, setdetailFood] = useState(detailItem);
   const [isCopied, setisCopied] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     setdetailFood(detailItem);
   }, [detailItem]);
 
-  // https://stackoverflow.com/questions/61092432/display-success-message-after-copying-url-to-clipboard
   const copyClipBoard = () => {
     navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
     setisCopied(!isCopied);
@@ -87,18 +92,12 @@ function DetailedFood({ location: { pathname } }) {
               Compartilhar
             </button>
             { isCopied && <span style={ { font: '10px' } }>Link copied!</span> }
-            {/* <button
-              type="button"
-              data-testid="favorite-btn"
-            >
-              Favoritar
-            </button> */}
             <input
               data-testid="favorite-btn"
               type="image"
               src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
               alt="search icon"
-              onClick={ () => setIsFavorite(!isFavorite) }
+              onClick={ () => handleClickFavorite(id, detailItem, true) }
             />
             <p data-testid="instructions">
               { detailFood.strInstructions }

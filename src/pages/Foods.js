@@ -1,14 +1,20 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
-import { Redirect, useHistory } from 'react-router';
+import { Redirect } from 'react-router';
 import AllHeader from '../components/AllHeader';
 import MyContext from '../context/Mycontext';
 
 export default function Foods({ history: { location } }) {
-  const history = useHistory();
+  // const history = useHistory();
 
   const { stateHook:
-     { foodsAPI, categoriesFood, handleClick, isRedirect } } = useContext(MyContext);
+     {
+       foodsAPI,
+       categoriesFood,
+       handleClick,
+       isRedirect,
+       handleClickRedirect,
+     } } = useContext(MyContext);
 
   const reduceFoods12 = (arr, num) => {
     const foods12 = arr.slice(0, num);
@@ -59,7 +65,7 @@ export default function Foods({ history: { location } }) {
               <div
                 key={ idMeal }
                 data-testid={ `${i}-recipe-card` }
-                onClick={ () => history.push(`/foods/${idMeal}`) }
+                onClick={ () => handleClickRedirect(idMeal) }
                 aria-hidden="true"
                 role="button"
               >
