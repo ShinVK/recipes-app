@@ -1,14 +1,21 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
-import { Redirect, useHistory } from 'react-router';
+import { Redirect } from 'react-router';
 // import { useHistory } from 'react-router';
 import AllHeader from '../components/AllHeader';
+import Footer from '../components/Footer';
 import MyContext from '../context/Mycontext';
 
 export default function Drinks({ history: { location } }) {
   const { stateHook:
-    { drinksAPI, categoriesDrinks, handleClick, isRedirect } } = useContext(MyContext);
-  const history = useHistory();
+    {
+      drinksAPI,
+      categoriesDrinks,
+      handleClick,
+      isRedirect,
+      handleClickRedirect,
+    } } = useContext(MyContext);
+  // const history = useHistory();
 
   const reduceDrinks12 = (arr, num) => {
     const drinks12 = arr.slice(0, num);
@@ -56,7 +63,7 @@ export default function Drinks({ history: { location } }) {
               <div
                 key={ idDrink }
                 data-testid={ `${i}-recipe-card` }
-                onClick={ () => history.push(`/drinks/${idDrink}`) }
+                onClick={ () => handleClickRedirect(idDrink) }
                 aria-hidden="true"
                 role="button"
               >
@@ -70,6 +77,7 @@ export default function Drinks({ history: { location } }) {
               </div>
             ))}
       </div>
+      <Footer />
     </div>
   );
 }
