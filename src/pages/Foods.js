@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { Redirect } from 'react-router';
 import AllHeader from '../components/AllHeader';
+import Footer from '../components/Footer';
 import MyContext from '../context/Mycontext';
 
 export default function Foods({ history: { location } }) {
@@ -84,6 +85,7 @@ export default function Foods({ history: { location } }) {
               </div>
             ))}
       </div>
+      <Footer />
     </div>
   );
 }
