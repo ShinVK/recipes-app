@@ -45,7 +45,6 @@ export default function Provider({ children }) {
     setActUrl(location.pathname);
     const idFromUrl = location.pathname.replace(/[^0-9]/g, '');
     if (idFromUrl.length > +'3') { setidItem(idFromUrl); }
-    // console.log(location);
   }, [location]);
 
   const handleClickRedirect = (id) => {
@@ -60,7 +59,6 @@ export default function Provider({ children }) {
   useEffect(() => {
     const recipeFavorite = (idMeal) => {
       if (localStorage.favoriteRecipes) {
-        console.log('entrei');
         const arrRecipes = JSON.parse(localStorage.favoriteRecipes);
         const isFav = arrRecipes.some(({ id }) => id === idMeal);
         setIsFavorite(isFav);
@@ -104,7 +102,6 @@ export default function Provider({ children }) {
   };
 
   const handleClickFavorite = (id, obj, isFood = true) => {
-    // console.log('teste');
     if (!isFavorite) {
       const recipeFav = (isFood) ? foodObj(obj) : drinkObj(obj);
       saveFavoriteRecipes(recipeFav);

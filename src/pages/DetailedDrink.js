@@ -65,7 +65,7 @@ function DetailedDrink({ location: { pathname } }) {
               src={ detailsDrinks.strDrinkThumb }
               alt="imagem do drink"
               data-testid="recipe-photo"
-              width="300"
+              width="330"
             />
             <h2
               data-testid="recipe-title"
@@ -106,6 +106,12 @@ function DetailedDrink({ location: { pathname } }) {
               itensCar={ divideArray(reduceArr(foodsAPI, +'6'), 2) }
               foods
             />
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+            >
+              Start Recipe
+            </button>
           </>
         ) : <p>Carregando...</p>}
     </div>

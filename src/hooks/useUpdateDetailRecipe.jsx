@@ -13,7 +13,6 @@ export default function useUpdateDetailRecipe(path, isFood) {
         try {
           const response = await fetch(URLstr);
           const data = await response.json();
-          console.log(data);
           setdetailItem(data[itemType][0]);
         } catch (error) {
           console.log(error);

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import MyContext from '../context/Mycontext';
 import CarouselBotstrap from '../components/CarouselBotstrap';
 import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
-import BtnRecipe from '../components/BtnRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 // import { foodObj } from '../services/favRecipes';
@@ -129,13 +128,12 @@ function DetailedFood({ location: { pathname } }) {
               itensCar={ divideArray(reduceArr(drinksAPI, +'6'), 2) }
               foods={ false }
             />
-            <BtnRecipe />
-            {/* <button
+            <button
               type="button"
               data-testid="start-recipe-btn"
             >
               Start Recipe
-            </button> */}
+            </button>
           </>
         ) : <p>carregando...</p> }
     </div>
