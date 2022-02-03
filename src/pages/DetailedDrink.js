@@ -6,44 +6,30 @@ import MyContext from '../context/Mycontext';
 import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import useIngredients from '../hooks/useIngredients';
 
 function DetailedDrink({ location: { pathname } }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [detailItem, id] = useUpdateDetailRecipe(pathname, false);
   const [detailsDrinks, setdetaildrinks] = useState(detailItem);
-  const [isCopied, setisCopied] = useState(false);
+  const [ingredients2] = useIngredients(detailItem, false);
 
   const {
     stateHook: { foodsAPI, isFavorite,
-      handleClickFavorite } } = useContext(MyContext);
+      isCopied,
+      handleClickFavorite, actStatus, copyClipBoard, done } } = useContext(MyContext);
 
   const history = useHistory();
 
+  // useEffect(() => {
+  // }, [detailItem]);
+
   useEffect(() => {
     setdetaildrinks(detailItem);
-  }, [detailItem]);
-
-  const copyClipBoard = () => {
-    navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`);
-    setisCopied(!isCopied);
-  };
-
-  useEffect(() => {
-    const numberItens = 20;
-    const ingredientsConst = [];
-    if (Object.keys(detailsDrinks).length > 0) {
-      for (let index = 1; index <= numberItens; index += 1) {
-        const ingredient = detailsDrinks[`strIngredient${index}`];
-        const measure = detailsDrinks[`strMeasure${index}`];
-        if (ingredient) {
-          ingredientsConst.push(`${ingredient} - ${measure}`);
-        }
-      }
-      setIngredients(ingredientsConst);
-      setIsLoading(true);
-    }
-  }, [detailsDrinks]);
+    setIngredients(ingredients2);
+    setIsLoading(true);
+  }, [ingredients2, detailItem]);
 
   const reduceArr = (arr, num) => {
     const arrRed = arr.slice(0, num);
@@ -79,7 +65,7 @@ function DetailedDrink({ location: { pathname } }) {
             <button
               type="button"
               data-testid="share-btn"
-              onClick={ () => copyClipBoard() }
+              onClick={ () => copyClipBoard(false, id) }
             >
               Compartilhar
             </button>
@@ -104,17 +90,23 @@ function DetailedDrink({ location: { pathname } }) {
                 </li>
               ))}
             </ul>
+
+            {!done && (
+              <button
+                type="button"
+                // data-testid="start-recipe-btn"
+                data-testid="start-recipe-btn"
+                onClick={ () => history.push(`${pathname}/in-progress`) }
+                className="btn__start"
+              >
+                {actStatus ? 'Continue Recipe' : 'Start Recipe'}
+              </button>
+            )}
+
             <CarouselBotstrap
               itensCar={ divideArray(reduceArr(foodsAPI, +'6'), 2) }
               foods
             />
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              onClick={ () => history.push(`${pathname}/in-progress`) }
-            >
-              Start Recipe
-            </button>
           </>
         ) : <p>Carregando...</p>}
     </div>

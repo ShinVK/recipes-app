@@ -26,7 +26,7 @@ function DrinksInProgress({ location: { pathname } }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [steps, setSteps] = useState();
-  const [ingredients2, steps2] = useCatchIngredients(detailItem, actStatus, id);
+  const [ingredients2, steps2] = useCatchIngredients(detailItem, actStatus, id, false);
   const [disable, setDisable] = useState(true);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ function DrinksInProgress({ location: { pathname } }) {
     const updatedCheckedStep = steps.map((step, i) => (i === i2 ? !step : step));
     const objLocal = { [id]: updatedCheckedStep };
 
-    saveRecipesInProgess(objLocal);
+    saveRecipesInProgess(objLocal, false);
     setSteps(updatedCheckedStep);
   };
 
@@ -80,7 +80,7 @@ function DrinksInProgress({ location: { pathname } }) {
             <button
               type="button"
               data-testid="share-btn"
-              onClick={ () => copyClipBoard() }
+              onClick={ () => copyClipBoard(false, id) }
             >
               Compartilhar
             </button>

@@ -12,13 +12,17 @@ export const saveFavoriteRecipes = (obj) => {
   }
 };
 
-export const saveRecipesInProgess = (obj) => {
-  if (localStorage.recipesInprogress) {
-    const objProgress = JSON.parse(localStorage.recipesInprogress);
-    const updateProgress = { ...objProgress, ...obj };
-    localStorage.setItem('recipesInprogress', JSON.stringify(updateProgress));
+export const saveRecipesInProgess = (obj, isFood = true) => {
+  const strKey = isFood ? 'meals' : 'cocktails';
+  if (localStorage.inProgressRecipes) {
+    const objProgress = JSON.parse(localStorage.inProgressRecipes);
+    const updateProgress = {
+      ...objProgress, [strKey]: { ...objProgress[strKey], ...obj } };
+    console.log(updateProgress);
+    localStorage.setItem('inProgressRecipes', JSON.stringify(updateProgress));
   } else {
-    localStorage.setItem('recipesInprogress', JSON.stringify(obj));
+    console.log('teste');
+    localStorage.setItem('inProgressRecipes', JSON.stringify({ [strKey]: obj }));
   }
 };
 
