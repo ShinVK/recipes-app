@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import CarouselBotstrap from '../components/CarouselBotstrap';
 import MyContext from '../context/Mycontext';
 import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
-import BtnRecipe from '../components/BtnRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
@@ -66,8 +65,7 @@ function DetailedDrink({ location: { pathname } }) {
               src={ detailsDrinks.strDrinkThumb }
               alt="imagem do drink"
               data-testid="recipe-photo"
-              width="560"
-              height="315"
+              width="300"
             />
             <h2
               data-testid="recipe-title"
@@ -108,13 +106,6 @@ function DetailedDrink({ location: { pathname } }) {
               itensCar={ divideArray(reduceArr(foodsAPI, +'6'), 2) }
               foods
             />
-            <BtnRecipe />
-            {/* <button
-              type="button"
-              data-testid="start-recipe-btn"
-            >
-              Start Recipe
-            </button> */}
           </>
         ) : <p>Carregando...</p>}
     </div>
