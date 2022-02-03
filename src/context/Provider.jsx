@@ -10,6 +10,7 @@ import {
 import useRecipesAPI from '../hooks/useRecipesAPI';
 import { drinkObj, filterLocalStorage, foodObj } from '../services/favRecipes';
 import { saveFavoriteRecipes } from '../services/localStorage';
+import useVerifyStatus from '../hooks/useVerifiyStatus';
 
 export default function Provider({ children }) {
   const [isSearching, setIsSearching] = useState(false);
@@ -23,6 +24,9 @@ export default function Provider({ children }) {
   const [isFavorite, setIsFavorite] = useState('');
   const [actURL, setActUrl] = useState('');
   const history = useHistory();
+  const [isCopied, setisCopied] = useState(false);
+  const [actStatus, setActStatus] = useState(false);
+  const [status] = useVerifyStatus(idItem);
 
   const handleClick = async ({ target }, page) => {
     const { value } = target;
@@ -34,18 +38,21 @@ export default function Provider({ children }) {
       setfoodsAPI(results);
     } if (page === 'drinks') {
       if (catDrinks === value || value === 'all') return setdrinksAPI(defaultDrinks);
-      setcatDrinks(value);
       const results = await fetchFilterCategory(value, page);
       setdrinksAPI(results);
+      setcatDrinks(value);
     }
   };
+
+  useEffect(() => {
+    setActStatus(status);
+  }, [status]);
 
   const location = useLocation();
   useEffect(() => {
     setActUrl(location.pathname);
     const idFromUrl = location.pathname.replace(/[^0-9]/g, '');
     if (idFromUrl.length > +'3') { setidItem(idFromUrl); }
-    // console.log(location);
   }, [location]);
 
   const handleClickRedirect = (id) => {
@@ -60,7 +67,6 @@ export default function Provider({ children }) {
   useEffect(() => {
     const recipeFavorite = (idMeal) => {
       if (localStorage.favoriteRecipes) {
-        console.log('entrei');
         const arrRecipes = JSON.parse(localStorage.favoriteRecipes);
         const isFav = arrRecipes.some(({ id }) => id === idMeal);
         setIsFavorite(isFav);
@@ -104,7 +110,6 @@ export default function Provider({ children }) {
   };
 
   const handleClickFavorite = (id, obj, isFood = true) => {
-    // console.log('teste');
     if (!isFavorite) {
       const recipeFav = (isFood) ? foodObj(obj) : drinkObj(obj);
       saveFavoriteRecipes(recipeFav);
@@ -112,6 +117,15 @@ export default function Provider({ children }) {
       filterLocalStorage(id);
     }
     setIsFavorite(!isFavorite);
+  };
+
+  const copyClipBoard = () => {
+    if (actURL.includes('food')) {
+      navigator.clipboard.writeText(`http://localhost:3000/foods/${idItem}`);
+    } else {
+      navigator.clipboard.writeText(`http://localhost:3000/drinks/${idItem}`);
+    }
+    setisCopied(!isCopied);
   };
 
   const stateHook = {
@@ -131,7 +145,9 @@ export default function Provider({ children }) {
     handleClickRedirect,
     isFavorite,
     handleClickFavorite,
-    actURL,
+    isCopied,
+    copyClipBoard,
+    actStatus,
   };
 
   return (

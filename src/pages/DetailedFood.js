@@ -1,17 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-// import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import MyContext from '../context/Mycontext';
 import CarouselBotstrap from '../components/CarouselBotstrap';
 import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
-import BtnRecipe from '../components/BtnRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-// import { foodObj } from '../services/favRecipes';
-// import { saveFavoriteRecipes } from '../services/localStorage';
-// import useIsFavorite from '../hooks/useIsFavorite';
-// import BtnFav from '../components/BtnFav';
-// import PropTypes from 'prop-types';
 
 function DetailedFood({ location: { pathname } }) {
   const {
@@ -21,6 +15,7 @@ function DetailedFood({ location: { pathname } }) {
       isFavorite,
       handleClickFavorite,
     } } = useContext(MyContext);
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [video, setVideo] = useState('');
@@ -129,13 +124,13 @@ function DetailedFood({ location: { pathname } }) {
               itensCar={ divideArray(reduceArr(drinksAPI, +'6'), 2) }
               foods={ false }
             />
-            <BtnRecipe />
-            {/* <button
+            <button
               type="button"
               data-testid="start-recipe-btn"
+              onClick={ () => history.push(`${pathname}/in-progress`) }
             >
               Start Recipe
-            </button> */}
+            </button>
           </>
         ) : <p>carregando...</p> }
     </div>

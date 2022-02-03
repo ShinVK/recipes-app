@@ -48,7 +48,7 @@ export default function Drinks({ history: { location } }) {
           type="button"
           value="all"
           data-testid="All-category-filter"
-          onClick={ (event) => handleClick(event, 'food') }
+          onClick={ (event) => handleClick(event, 'drinks') }
         >
           All
         </button>
