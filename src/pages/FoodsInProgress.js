@@ -76,7 +76,7 @@ function FoodsInProgress({ location: { pathname } }) {
               type="button"
               data-testid="share-btn"
               className="btn btn-primary"
-              onClick={ () => copyClipBoard(`drinks/${id}`) }
+              onClick={ () => copyClipBoard(`foods/${id}`) }
             >
               Compartilhar
             </button>
