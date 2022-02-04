@@ -17,6 +17,7 @@ import DetailedDrink from '../pages/DetailedDrink';
 import DetailedFood from '../pages/DetailedFood';
 import FoodsInProgress from '../pages/FoodsInProgress';
 import DrinksInProgress from '../pages/DrinksInProgress';
+import NotFound from '../pages/NotFound';
 
 export default function Routes() {
   return (
@@ -38,6 +39,7 @@ export default function Routes() {
       <Route exact path="/profile" component={ Profile } />
       <Route exact path="/done-recipes" component={ RecipesDone } />
       <Route exact path="/favorite-recipes" component={ FavoritesRecipes } />
+      <Route exact path="*" component={ NotFound } />
     </Switch>
   );
 }
