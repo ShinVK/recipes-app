@@ -1,9 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import AllHeader from '../components/AllHeader';
 import Footer from '../components/Footer';
 
-export default function ExploreDrinks() {
+export default function ExploreDrinks({ history: { location } }) {
   const history = useHistory();
   const handlerandom = async () => {
     const fetchRandom = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php');
@@ -14,7 +15,11 @@ export default function ExploreDrinks() {
 
   return (
     <div>
-      <AllHeader title="Explore Drinks" btnSearch={ false } />
+      <AllHeader
+        actPage={ location.pathname }
+        title="Explore Drinks"
+        btnSearch={ false }
+      />
       <button
         type="button"
         data-testid="explore-by-ingredient"
@@ -33,3 +38,7 @@ export default function ExploreDrinks() {
     </div>
   );
 }
+
+ExploreDrinks.propTypes = {
+  history: PropTypes.objectOf(String).isRequired,
+};
