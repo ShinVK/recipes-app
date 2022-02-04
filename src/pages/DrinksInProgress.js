@@ -6,7 +6,9 @@ import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import useCatchIngredients from '../hooks/useCatchIngredients';
-import { saveRecipesInProgess } from '../services/localStorage';
+import { saveRecipesDone, saveRecipesInProgess } from '../services/localStorage';
+import { drinkDone } from '../services/favRecipes';
+import useVerifyStatus from '../hooks/useVerifiyStatus';
 
 function DrinksInProgress({ location: { pathname } }) {
   const {
@@ -16,7 +18,6 @@ function DrinksInProgress({ location: { pathname } }) {
       handleClickFavorite,
       isCopied,
       copyClipBoard,
-      actStatus,
     } } = useContext(MyContext);
 
   const history = useHistory();
@@ -25,7 +26,8 @@ function DrinksInProgress({ location: { pathname } }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [steps, setSteps] = useState();
-  const [ingredients2, steps2] = useCatchIngredients(detailItem, actStatus, id);
+  const [status] = useVerifyStatus(id, 'drinks');
+  const [ingredients2, steps2] = useCatchIngredients(detailItem, status, id, false);
   const [disable, setDisable] = useState(true);
 
   useEffect(() => {
@@ -48,8 +50,14 @@ function DrinksInProgress({ location: { pathname } }) {
     const updatedCheckedStep = steps.map((step, i) => (i === i2 ? !step : step));
     const objLocal = { [id]: updatedCheckedStep };
 
-    saveRecipesInProgess(objLocal);
+    saveRecipesInProgess(objLocal, false);
     setSteps(updatedCheckedStep);
+  };
+
+  const handleClickDone = (obj) => {
+    const itemDone = drinkDone(obj);
+    saveRecipesDone(itemDone);
+    history.push('/done-recipes');
   };
 
   return (
@@ -73,7 +81,7 @@ function DrinksInProgress({ location: { pathname } }) {
             <button
               type="button"
               data-testid="share-btn"
-              onClick={ () => copyClipBoard() }
+              onClick={ () => copyClipBoard(`drinks/${id}`) }
             >
               Compartilhar
             </button>
@@ -99,6 +107,7 @@ function DrinksInProgress({ location: { pathname } }) {
                   className={ (steps[i])
                     ? 'checked_text form-check-label' : 'form-check-label' }
                   htmlFor={ `${i}-input` }
+                  // data-testid={ `${i}-ingredient-step` }
                 >
 
                   <input
@@ -117,7 +126,7 @@ function DrinksInProgress({ location: { pathname } }) {
               type="button"
               data-testid="finish-recipe-btn"
               disabled={ disable }
-              onClick={ () => history.push('/done-recipes') }
+              onClick={ () => handleClickDone(detailItem) }
             >
               Finish Recipe
             </button>

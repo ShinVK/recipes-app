@@ -30,6 +30,27 @@ body {
 
 .checked_text {
   text-decoration: line-through;
+}
 
-  /* text-decoration: none solid rgb(0, 0, 0); */
+.btn__start {
+  bottom: 0;
+  position: fixed;
+  z-index: 100000;
+}
+
+.link__copied {
+  background-color: aliceblue;
+  border: 1px solid #464646;
+  font-size: 8px;
+  left: 10%;
+  position: fixed;
+  top: 5%;
+  width: 50px;
+  z-index: 1000;
+}
+
+.link__href {
+  color: black;
+  font-size: 20px;
+  text-decoration: none;
 }

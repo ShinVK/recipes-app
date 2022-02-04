@@ -6,6 +6,9 @@ import CarouselBotstrap from '../components/CarouselBotstrap';
 import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import useIngredients from '../hooks/useIngredients';
+import useVerifyStatus from '../hooks/useVerifiyStatus';
+import useDone from '../hooks/useVerifyDone';
 
 function DetailedFood({ location: { pathname } }) {
   const {
@@ -14,42 +17,29 @@ function DetailedFood({ location: { pathname } }) {
       drinksAPI,
       isFavorite,
       handleClickFavorite,
+      copyClipBoard,
+      isCopied,
     } } = useContext(MyContext);
+
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [video, setVideo] = useState('');
   const [detailItem, id] = useUpdateDetailRecipe(pathname, true);
   const [detailFood, setdetailFood] = useState(detailItem);
-  const [isCopied, setisCopied] = useState(false);
+  const [ingredients2, video2] = useIngredients(detailItem, true);
+  const [status] = useVerifyStatus(id, 'food');
+  const [done2] = useDone(id);
 
   useEffect(() => {
     setdetailFood(detailItem);
   }, [detailItem]);
 
-  const copyClipBoard = () => {
-    navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
-    setisCopied(!isCopied);
-  };
-
   useEffect(() => {
-    const ingredientsConst = [];
-    const numberItens = 20;
-    if (Object.keys(detailFood).length !== 0) {
-      for (let index = 1; index <= numberItens; index += 1) {
-        const ingredient = detailFood[`strIngredient${index}`];
-        const measure = detailFood[`strMeasure${index}`];
-        if (ingredient) {
-          ingredientsConst.push(`${ingredient} - ${measure}`);
-        }
-      }
-      const linkVideo = detailFood.strYoutube;
-      const codigoVideo = linkVideo.split('=');
-      setVideo(`https://www.youtube.com/embed/${codigoVideo[1]}`);
-      setIngredients(ingredientsConst);
-      setIsLoading(true);
-    }
-  }, [detailFood]);
+    setIngredients(ingredients2);
+    setVideo(video2);
+    setIsLoading(true);
+  }, [ingredients2, video2]);
 
   const reduceArr = (arr, num) => {
     const arrRed = arr.slice(0, num);
@@ -82,7 +72,7 @@ function DetailedFood({ location: { pathname } }) {
               type="button"
               data-testid="share-btn"
               className="btn btn-primary"
-              onClick={ () => copyClipBoard() }
+              onClick={ () => copyClipBoard(`foods/${id}`) }
             >
               Compartilhar
             </button>
@@ -124,13 +114,16 @@ function DetailedFood({ location: { pathname } }) {
               itensCar={ divideArray(reduceArr(drinksAPI, +'6'), 2) }
               foods={ false }
             />
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              onClick={ () => history.push(`${pathname}/in-progress`) }
-            >
-              Start Recipe
-            </button>
+            {!done2 && (
+              <button
+                type="button"
+                data-testid="start-recipe-btn"
+                onClick={ () => history.push(`${pathname}/in-progress`) }
+                className="btn__start"
+              >
+                {status ? 'Continue Recipe' : 'Start Recipe'}
+              </button>
+            )}
           </>
         ) : <p>carregando...</p> }
     </div>

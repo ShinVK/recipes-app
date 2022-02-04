@@ -10,7 +10,6 @@ import {
 import useRecipesAPI from '../hooks/useRecipesAPI';
 import { drinkObj, filterLocalStorage, foodObj } from '../services/favRecipes';
 import { saveFavoriteRecipes } from '../services/localStorage';
-import useVerifyStatus from '../hooks/useVerifiyStatus';
 
 export default function Provider({ children }) {
   const [isSearching, setIsSearching] = useState(false);
@@ -25,8 +24,6 @@ export default function Provider({ children }) {
   const [actURL, setActUrl] = useState('');
   const history = useHistory();
   const [isCopied, setisCopied] = useState(false);
-  const [actStatus, setActStatus] = useState(false);
-  const [status] = useVerifyStatus(idItem);
 
   const handleClick = async ({ target }, page) => {
     const { value } = target;
@@ -43,10 +40,6 @@ export default function Provider({ children }) {
       setcatDrinks(value);
     }
   };
-
-  useEffect(() => {
-    setActStatus(status);
-  }, [status]);
 
   const location = useLocation();
   useEffect(() => {
@@ -119,12 +112,8 @@ export default function Provider({ children }) {
     setIsFavorite(!isFavorite);
   };
 
-  const copyClipBoard = () => {
-    if (actURL.includes('food')) {
-      navigator.clipboard.writeText(`http://localhost:3000/foods/${idItem}`);
-    } else {
-      navigator.clipboard.writeText(`http://localhost:3000/drinks/${idItem}`);
-    }
+  const copyClipBoard = (url) => {
+    navigator.clipboard.writeText(`http://localhost:3000/${url}`);
     setisCopied(!isCopied);
   };
 
@@ -147,7 +136,6 @@ export default function Provider({ children }) {
     handleClickFavorite,
     isCopied,
     copyClipBoard,
-    actStatus,
   };
 
   return (
