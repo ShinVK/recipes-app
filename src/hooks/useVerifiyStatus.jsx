@@ -17,7 +17,7 @@ export default function useVerifyStatus(id, url) {
           // console.log(Object.entries(filterEl[0][1]));
           const entriesRecipes = Object.keys(filterEl[0][1]);
           const existId = entriesRecipes.some((el) => el === id2);
-          console.log(entriesRecipes);
+          // console.log(entriesRecipes);
           setStatus(existId);
         }
       }

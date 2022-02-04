@@ -61,7 +61,7 @@ export const foodsDone = (obj) => {
     name: strMeal,
     image: strMealThumb,
     doneDate: dataAtual(),
-    tags: strTags.split(','),
+    tags: strTags ? strTags.split(',') : '',
   };
 };
 
