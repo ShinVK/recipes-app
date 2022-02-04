@@ -1,18 +1,26 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link, useHistory } from 'react-router-dom';
 import AllHeader from '../components/AllHeader';
 import useGetFromLocal from '../hooks/useGetFromLocal';
 import MyContext from '../context/Mycontext';
 import shareIcon from '../images/shareIcon.svg';
 
 export default function RecipesDone({ history: { location } }) {
-  const [allRecipes] = useGetFromLocal();
+  const [allRecipes, meals, drinks] = useGetFromLocal();
   const {
     stateHook:
     {
       isCopied,
       copyClipBoard,
     } } = useContext(MyContext);
+
+  const [recipes, setRecipes] = useState(allRecipes);
+  const history = useHistory();
+
+  useEffect(() => {
+    setRecipes(allRecipes);
+  }, [allRecipes]);
 
   return (
     <div>
@@ -25,22 +33,25 @@ export default function RecipesDone({ history: { location } }) {
       <button
         type="button"
         data-testid="filter-by-all-btn"
+        onClick={ () => setRecipes(allRecipes) }
       >
         All
       </button>
       <button
         type="button"
         data-testid="filter-by-food-btn"
+        onClick={ () => setRecipes(meals) }
       >
-        Drink
+        Foods
       </button>
       <button
         type="button"
         data-testid="filter-by-drink-btn"
+        onClick={ () => setRecipes(drinks) }
       >
-        Food
+        Cocktails
       </button>
-      {allRecipes && allRecipes.map((
+      {recipes && recipes.map((
         { id,
           image,
           category,
@@ -58,15 +69,22 @@ export default function RecipesDone({ history: { location } }) {
               <h3 data-testid="0-horizontal-top-text">
                 {`${nationality} - ${category}`}
               </h3>
-              <img
+              <input
+                type="image"
                 src={ image }
                 alt="imagem da refeição"
                 data-testid={ `${0}-horizontal-image` }
                 width="120"
+                onClick={ () => history.push(`/foods/${id}`) }
               />
-              <h3 data-testid={ `${i}-horizontal-name` }>
+              <Link
+                className="link__href"
+                to={ `foods/${id}` }
+                role="presentation"
+                data-testid={ `${i}-horizontal-name` }
+              >
                 {name}
-              </h3>
+              </Link>
               <input
                 type="image"
                 src={ shareIcon }
@@ -93,15 +111,21 @@ export default function RecipesDone({ history: { location } }) {
             <h3 data-testid={ `${i}-horizontal-top-text` }>
               {alcoholicOrNot}
             </h3>
-            <img
+            <input
+              type="image"
               src={ image }
               alt="imagem da refeição"
               data-testid={ `${i}-horizontal-image` }
               width="120"
+              onClick={ () => history.push(`/drinks/${id}`) }
             />
-            <h3 data-testid={ `${i}-horizontal-name` }>
+            <Link
+              className="link__href"
+              to={ `drinks/${id}` }
+              data-testid={ `${i}-horizontal-name` }
+            >
               {name}
-            </h3>
+            </Link>
             <input
               type="image"
               src={ shareIcon }
