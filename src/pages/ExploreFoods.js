@@ -1,10 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import AllHeader from '../components/AllHeader';
 
 import Footer from '../components/Footer';
 
-export default function ExploreFoods() {
+export default function ExploreFoods({ history: { location } }) {
   const history = useHistory();
   const handlerandom = async () => {
     const fetchRandom = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
@@ -15,7 +16,11 @@ export default function ExploreFoods() {
 
   return (
     <div>
-      <AllHeader title="Explore Foods" btnSearch={ false } />
+      <AllHeader
+        actPage={ location.pathname }
+        title="Explore Foods"
+        btnSearch={ false }
+      />
       <button
         type="button"
         data-testid="explore-by-ingredient"
@@ -41,3 +46,7 @@ export default function ExploreFoods() {
     </div>
   );
 }
+
+ExploreFoods.propTypes = {
+  history: PropTypes.objectOf(String).isRequired,
+};

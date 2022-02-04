@@ -121,6 +121,21 @@ export default function Provider({ children }) {
     setisCopied(!isCopied);
   };
 
+  const filterByIngredient = async (isFood, ingredient) => {
+    if (isFood) {
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`);
+      const { meals } = await response.json();
+      setfoodsAPI(meals);
+      history.push('/foods');
+    } else {
+      const URL = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`;
+      const response = await fetch(URL);
+      const { drinks } = await response.json();
+      setdrinksAPI(drinks);
+      history.push('/drinks');
+    }
+  };
+
   const stateHook = {
     isSearching,
     onClickSearch,
@@ -141,6 +156,7 @@ export default function Provider({ children }) {
     isCopied,
     copyClipBoard,
     removeFavorite,
+    filter: filterByIngredient,
   };
 
   return (
