@@ -9,7 +9,7 @@ export default function useFilterNation(nation) {
         const URLFOOD = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
         const response = await fetch(URLFOOD);
         const { meals } = await response.json();
-        console.log(meals);
+        // console.log(meals);
         setmealsNation(meals.slice(0, +'12'));
       } else {
         const URL = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${nation2}`;
