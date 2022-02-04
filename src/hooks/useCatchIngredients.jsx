@@ -6,7 +6,7 @@ export default function useCatchIngredients(arr, status2, id, isFood = true) {
 
   useEffect(() => {
     const catchIngredients = (arr2, status, id2) => {
-      console.log(status);
+      // console.log(status);
       const ingredientsConst = [];
       const numberItens = 20;
       const index2 = isFood ? 'meals' : 'cocktails';

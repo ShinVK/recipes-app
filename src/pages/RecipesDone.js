@@ -95,7 +95,7 @@ export default function RecipesDone({ history: { location } }) {
               <h4 data-testid={ `${i}-horizontal-done-date` }>
                 {doneDate}
               </h4>
-              {tags.map((el, i2) => (
+              {tags.length > 0 && tags.map((el, i2) => (
                 <h5
                   key={ i2 }
                   data-testid={ `${i}-${el}-horizontal-tag` }
