@@ -112,6 +112,10 @@ export default function Provider({ children }) {
     setIsFavorite(!isFavorite);
   };
 
+  const removeFavorite = (id) => {
+    filterLocalStorage(id);
+  };
+
   const copyClipBoard = (url) => {
     navigator.clipboard.writeText(`http://localhost:3000/${url}`);
     setisCopied(!isCopied);
@@ -136,6 +140,7 @@ export default function Provider({ children }) {
     handleClickFavorite,
     isCopied,
     copyClipBoard,
+    removeFavorite,
   };
 
   return (
