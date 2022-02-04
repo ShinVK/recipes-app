@@ -6,9 +6,10 @@ export default function useCatchIngredients(arr, status2, id, isFood = true) {
 
   useEffect(() => {
     const catchIngredients = (arr2, status, id2) => {
+      console.log(status);
       const ingredientsConst = [];
       const numberItens = 20;
-      const index2 = isFood ? 0 : 1;
+      const index2 = isFood ? 'meals' : 'cocktails';
       if (Object.keys(arr2).length !== 0) {
         for (let index = 1; index <= numberItens; index += 1) {
           const ingredient = arr2[`strIngredient${index}`];
@@ -22,7 +23,8 @@ export default function useCatchIngredients(arr, status2, id, isFood = true) {
       if (status) {
         const arrListSteps = localStorage.inProgressRecipes;
         const entriesArr = Object.entries(JSON.parse(arrListSteps));
-        const entriesRecipes = Object.entries(entriesArr[index2][1]);
+        const filterEl = entriesArr.filter((el) => el[0] === index2);
+        const entriesRecipes = Object.entries(filterEl[0][1]);
         const idAct = entriesRecipes.filter((el) => el[0] === id2);
         setSteps2(idAct[0][1]);
       } else {

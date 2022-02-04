@@ -7,6 +7,8 @@ import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import useIngredients from '../hooks/useIngredients';
+import useVerifyStatus from '../hooks/useVerifiyStatus';
+import useDone from '../hooks/useVerifyDone';
 
 function DetailedDrink({ location: { pathname } }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,11 +16,13 @@ function DetailedDrink({ location: { pathname } }) {
   const [detailItem, id] = useUpdateDetailRecipe(pathname, false);
   const [detailsDrinks, setdetaildrinks] = useState(detailItem);
   const [ingredients2] = useIngredients(detailItem, false);
+  const [status] = useVerifyStatus(id, 'drink');
+  const [done2] = useDone(id);
 
   const {
     stateHook: { foodsAPI, isFavorite,
       isCopied,
-      handleClickFavorite, actStatus, copyClipBoard, done } } = useContext(MyContext);
+      handleClickFavorite, copyClipBoard } } = useContext(MyContext);
 
   const history = useHistory();
 
@@ -65,7 +69,7 @@ function DetailedDrink({ location: { pathname } }) {
             <button
               type="button"
               data-testid="share-btn"
-              onClick={ () => copyClipBoard(false, id) }
+              onClick={ () => copyClipBoard(`drinks/${id}`) }
             >
               Compartilhar
             </button>
@@ -91,7 +95,7 @@ function DetailedDrink({ location: { pathname } }) {
               ))}
             </ul>
 
-            {!done && (
+            {!done2 && (
               <button
                 type="button"
                 // data-testid="start-recipe-btn"
@@ -99,7 +103,7 @@ function DetailedDrink({ location: { pathname } }) {
                 onClick={ () => history.push(`${pathname}/in-progress`) }
                 className="btn__start"
               >
-                {actStatus ? 'Continue Recipe' : 'Start Recipe'}
+                {status ? 'Continue Recipe' : 'Start Recipe'}
               </button>
             )}
 

@@ -37,3 +37,14 @@ body {
   position: fixed;
   z-index: 100000;
 }
+
+.link__copied {
+  background-color: aliceblue;
+  border: 1px solid #464646;
+  font-size: 8px;
+  left: 10%;
+  position: fixed;
+  top: 5%;
+  width: 50px;
+  z-index: 1000;
+}

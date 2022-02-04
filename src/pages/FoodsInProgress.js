@@ -8,6 +8,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import useCatchIngredients from '../hooks/useCatchIngredients';
 import { saveRecipesDone, saveRecipesInProgess } from '../services/localStorage';
 import { foodsDone } from '../services/favRecipes';
+import useVerifyStatus from '../hooks/useVerifiyStatus';
 
 function FoodsInProgress({ location: { pathname } }) {
   const {
@@ -17,13 +18,13 @@ function FoodsInProgress({ location: { pathname } }) {
       handleClickFavorite,
       isCopied,
       copyClipBoard,
-      actStatus,
     } } = useContext(MyContext);
   const [detailItem, id] = useUpdateDetailRecipe(pathname, true);
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [steps, setSteps] = useState();
-  const [ingredients2, steps2] = useCatchIngredients(detailItem, actStatus, id);
+  const [status] = useVerifyStatus(id, 'food');
+  const [ingredients2, steps2] = useCatchIngredients(detailItem, status, id);
   const [disable, setDisable] = useState(true);
 
   const history = useHistory();
@@ -75,7 +76,7 @@ function FoodsInProgress({ location: { pathname } }) {
               type="button"
               data-testid="share-btn"
               className="btn btn-primary"
-              onClick={ () => copyClipBoard(true, id) }
+              onClick={ () => copyClipBoard(`drinks/${id}`) }
             >
               Compartilhar
             </button>

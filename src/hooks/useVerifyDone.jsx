@@ -6,13 +6,11 @@ export default function useDone(id3) {
   useEffect(() => {
     const verifyDone = (id2) => {
       const arrListDone = localStorage.doneRecipes;
-      // console.log(entriesArr);
       if (!arrListDone || id2.length < +'3') {
         setdone2(false);
       } else {
         const entriesArr = JSON.parse(arrListDone);
         const existId = entriesArr.some(({ id }) => id === id2);
-        // console.log(existId);
         setdone2(existId);
       }
     };

@@ -10,8 +10,6 @@ import {
 import useRecipesAPI from '../hooks/useRecipesAPI';
 import { drinkObj, filterLocalStorage, foodObj } from '../services/favRecipes';
 import { saveFavoriteRecipes } from '../services/localStorage';
-import useVerifyStatus from '../hooks/useVerifiyStatus';
-import useDone from '../hooks/useVerifyDone';
 
 export default function Provider({ children }) {
   const [isSearching, setIsSearching] = useState(false);
@@ -26,10 +24,6 @@ export default function Provider({ children }) {
   const [actURL, setActUrl] = useState('');
   const history = useHistory();
   const [isCopied, setisCopied] = useState(false);
-  const [actStatus, setActStatus] = useState(false);
-  const [status] = useVerifyStatus(idItem, actURL);
-  const [done2] = useDone(idItem);
-  const [done, setDone] = useState(done2);
 
   const handleClick = async ({ target }, page) => {
     const { value } = target;
@@ -46,12 +40,6 @@ export default function Provider({ children }) {
       setcatDrinks(value);
     }
   };
-
-  useEffect(() => {
-    setActStatus(status);
-    setDone(done2);
-    console.log(done2);
-  }, [status, done2]);
 
   const location = useLocation();
   useEffect(() => {
@@ -124,12 +112,8 @@ export default function Provider({ children }) {
     setIsFavorite(!isFavorite);
   };
 
-  const copyClipBoard = (isFood, id) => {
-    if (isFood) {
-      navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
-    } else {
-      navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`);
-    }
+  const copyClipBoard = (url) => {
+    navigator.clipboard.writeText(`http://localhost:3000/${url}`);
     setisCopied(!isCopied);
   };
 
@@ -152,8 +136,6 @@ export default function Provider({ children }) {
     handleClickFavorite,
     isCopied,
     copyClipBoard,
-    actStatus,
-    done,
   };
 
   return (

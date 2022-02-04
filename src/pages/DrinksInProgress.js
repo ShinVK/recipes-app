@@ -8,6 +8,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import useCatchIngredients from '../hooks/useCatchIngredients';
 import { saveRecipesDone, saveRecipesInProgess } from '../services/localStorage';
 import { drinkDone } from '../services/favRecipes';
+import useVerifyStatus from '../hooks/useVerifiyStatus';
 
 function DrinksInProgress({ location: { pathname } }) {
   const {
@@ -17,7 +18,6 @@ function DrinksInProgress({ location: { pathname } }) {
       handleClickFavorite,
       isCopied,
       copyClipBoard,
-      actStatus,
     } } = useContext(MyContext);
 
   const history = useHistory();
@@ -26,7 +26,8 @@ function DrinksInProgress({ location: { pathname } }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [steps, setSteps] = useState();
-  const [ingredients2, steps2] = useCatchIngredients(detailItem, actStatus, id, false);
+  const [status] = useVerifyStatus(id, 'drinks');
+  const [ingredients2, steps2] = useCatchIngredients(detailItem, status, id, false);
   const [disable, setDisable] = useState(true);
 
   useEffect(() => {
@@ -80,7 +81,7 @@ function DrinksInProgress({ location: { pathname } }) {
             <button
               type="button"
               data-testid="share-btn"
-              onClick={ () => copyClipBoard(false, id) }
+              onClick={ () => copyClipBoard(`drinks/${id}`) }
             >
               Compartilhar
             </button>
@@ -106,6 +107,7 @@ function DrinksInProgress({ location: { pathname } }) {
                   className={ (steps[i])
                     ? 'checked_text form-check-label' : 'form-check-label' }
                   htmlFor={ `${i}-input` }
+                  // data-testid={ `${i}-ingredient-step` }
                 >
 
                   <input

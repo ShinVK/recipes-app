@@ -18,10 +18,8 @@ export const saveRecipesInProgess = (obj, isFood = true) => {
     const objProgress = JSON.parse(localStorage.inProgressRecipes);
     const updateProgress = {
       ...objProgress, [strKey]: { ...objProgress[strKey], ...obj } };
-    console.log(updateProgress);
     localStorage.setItem('inProgressRecipes', JSON.stringify(updateProgress));
   } else {
-    console.log('teste');
     localStorage.setItem('inProgressRecipes', JSON.stringify({ [strKey]: obj }));
   }
 };
