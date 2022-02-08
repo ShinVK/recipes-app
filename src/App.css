@@ -10,10 +10,6 @@
   width: 100%;
 }
 
-body {
-  overflow: auto;
-}
-
 .container__carousel {
   display: flex;
   flex-wrap: nowrap;
@@ -21,11 +17,8 @@ body {
   overflow-x: scroll;
   width: 300px;
 }
-
-.container__meals {
-  display: flex;
-  flex-wrap: nowrap;
-  width: 300px;
+body {
+  background-color: #FA824C;
 }
 
 .checked_text {
@@ -53,4 +46,9 @@ body {
   color: black;
   font-size: 20px;
   text-decoration: none;
+}
+
+.card__recipes {
+  height: 200px;
+  width: 160px;
 }

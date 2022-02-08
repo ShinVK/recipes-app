@@ -2,17 +2,37 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import { BrowserRouter } from 'react-router-dom';
+import { createTheme, ThemeProvider } from '@mui/material';
 import Routes from './Routes/Routes';
 import Provider from './context/Provider';
+
+const theme = createTheme({
+  palette: {
+    background: {
+      default: '#FFFBFC',
+    },
+    primary: {
+      main: '#E29578',
+    },
+    secondary: {
+      main: '#006D77',
+    },
+    success: {
+      main: '#83C5BE',
+    },
+  },
+});
 
 export default function App() {
   return (
     <Provider>
-      <div className="meals">
+      <ThemeProvider theme={ theme }>
+
         {/* <BrowserRouter> */}
         <Routes />
         {/* </BrowserRouter> */}
-      </div>
+      </ThemeProvider>
+
     </Provider>
   );
 }

@@ -25,11 +25,13 @@ export default function Provider({ children }) {
   const history = useHistory();
   const [isCopied, setisCopied] = useState(false);
 
-  const handleClick = async ({ target }, page) => {
-    const { value } = target;
+  const handleClick = async (value, page) => {
+    // const { value } = target;
     setisRedirect(false);
     if (page === 'food') {
-      if (catFoods === value || value === 'all') return setfoodsAPI(defaultFoods);
+      if (value === 'All') {
+        return setfoodsAPI(defaultFoods);
+      }
       setcatFoods((value));
       const results = await fetchFilterCategory(value, page);
       setfoodsAPI(results);

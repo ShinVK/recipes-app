@@ -1,24 +1,39 @@
+/* eslint-disable react/jsx-max-depth */
+import {
+  Box,
+  Card,
+  CardContent,
+  // CardHeader,
+  CardMedia,
+  Grid, Tab, Tabs, Toolbar, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router';
 import AllHeader from '../components/AllHeader';
 import Footer from '../components/Footer';
+// import { BackToTop } from '../components/mui/ScrollTes';
 import MyContext from '../context/Mycontext';
 
 export default function Foods({ history: { location } }) {
-  // const history = useHistory();
+  const [taBvalue, setTabValue] = useState('All');
 
   const { stateHook:
-     {
-       foodsAPI,
-       categoriesFood,
-       handleClick,
-       isRedirect,
-       handleClickRedirect,
-     } } = useContext(MyContext);
+    {
+      foodsAPI,
+      categoriesFood,
+      handleClick,
+      isRedirect,
+      handleClickRedirect,
+    } } = useContext(MyContext);
 
-  const reduceFoods12 = (arr, num) => {
-    const foods12 = arr.slice(0, num);
+  const handleChangeTab = (event, newValue) => {
+    handleClick(newValue, 'food');
+    setTabValue(newValue);
+  };
+  // const history = useHistory();
+
+  const reduceFoods12 = (arr, num, num2) => {
+    const foods12 = arr.slice(num2, num);
     // console.log(drinks12);
     return foods12;
   };
@@ -29,67 +44,94 @@ export default function Foods({ history: { location } }) {
   };
 
   return (
-    <div>
-      <AllHeader title="Foods" actPage={ location.pathname } />
-      <form>
-        {/* <select
-          onClick={ (event) => handleClick(event, 'food') }
-        > */}
-        {reduceFoods12(categoriesFood, +'5').map(({ strCategory }, i) => (
-          <button
-            type="button"
-            value={ strCategory }
-            key={ i }
-            data-testid={ `${strCategory}-category-filter` }
-            onClick={ (event) => handleClick(event, 'food') }
+    <>
 
+      <AllHeader title="Foods" actPage={ location.pathname } />
+      <Box
+        sx={ { '@ sx': { maxWidth: 330 } } }
+        justify="space-around"
+        color="primary"
+      >
+        <Box sx={ { width: '100%' } }>
+          <Tabs
+            value={ taBvalue }
+            onChange={ handleChangeTab }
+            textColor="secondary"
+            indicatorColor="secondary"
+            variant="scrollable"
+            aria-label="secondary tabs example"
           >
-            {strCategory}
-          </button>
-        ))}
-        <button
-          type="button"
-          value="all"
-          data-testid="All-category-filter"
-          onClick={ (event) => handleClick(event, 'food') }
-        >
-          All
-        </button>
-        {/* </select> */}
-      </form>
-      <div className="container__meals">
+            <Tab value="All" label="All" />
+            {reduceFoods12(categoriesFood, +'5', 0).map(({ strCategory }, i) => (
+              <Tab
+                value={ strCategory }
+                key={ i }
+                data-testid={ `${strCategory}-category-filter` }
+                label={ strCategory }
+              />
+            ))}
+          </Tabs>
+        </Box>
+
+      </Box>
+      <Toolbar />
+      {/* <div className="container__meals"> */}
+      <Grid container spacing={ 1 } justifyContent="center" minWidth="300px">
+        {/* direction="column" */}
         { foodsAPI.length === 1 && isRedirect ? (
           redirectDetailedPage(foodsAPI)
         )
           : (reduceFoods12(foodsAPI, +'12'))
             .map(({ idMeal, strMeal, strMealThumb }, i) => (
-              <div
+
+              <Grid
                 key={ idMeal }
-                data-testid={ `${i}-recipe-card` }
-                onClick={ () => handleClickRedirect(idMeal) }
-                aria-hidden="true"
-                role="button"
+                item
+                minWidth="120px"
+                // xs={ 9 }
+                // md={ 3 }
+                style={ { textAlign: 'center' } }
               >
-                <img
-                  style={ { width: '50px' } }
-                  data-testid={ `${i}-card-img` }
-                  src={ strMealThumb }
-                  alt="thumbnail food"
-                />
-                <h3
-                  data-testid={ `${i}-card-name` }
-                  style={ { font: '10px' } }
+                <Card
+                  sx={ { maxWidth: 160, bgcolor: '#faede8' } }
+                  data-testid={ `${i}-recipe-card` }
+                  onClick={ () => handleClickRedirect(idMeal) }
+                  aria-hidden="true"
+                  className="card__recipes"
+                  role="button"
                 >
-                  {strMeal}
-                </h3>
-              </div>
+                  {/* <CardHeader
+                    title={ strMeal && strMeal.slice(0, +'10') }
+                    subheader={ taBvalue }
+                  /> */}
+                  <CardMedia
+                    component="img"
+                    height="100"
+                    image={ strMealThumb }
+                    alt="thumbnail food"
+                    data-testid={ `${i}-card-img` }
+                  />
+                  <CardContent>
+                    <Typography variant="h5" component="div" color="secondary">
+                      { taBvalue }
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      { strMeal.length > +'24'
+                        ? `${strMeal.slice(0, +'24')}...` : strMeal}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
             ))}
-      </div>
+      </Grid>
+      {/* <BackToTop /> */}
       <Footer />
-    </div>
+    </>
   );
 }
 
 Foods.propTypes = {
   history: PropTypes.objectOf(String).isRequired,
 };
+
+// ? `${strInstructions.slice(0, +'50')} ...` : strMeal
