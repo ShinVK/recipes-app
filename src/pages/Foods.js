@@ -100,7 +100,7 @@ export default function Foods({ history: { location } }) {
                 style={ { textAlign: 'center' } }
               >
                 <Card
-                  sx={ { maxWidth: 160, bgcolor: '#faede8' } }
+                  sx={ { maxWidth: 160, bgcolor: '#fdf8f6' } }
                   data-testid={ `${i}-recipe-card` }
                   onClick={ () => handleClickRedirect(idMeal) }
                   aria-hidden="true"

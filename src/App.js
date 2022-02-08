@@ -9,7 +9,7 @@ import Provider from './context/Provider';
 const theme = createTheme({
   palette: {
     background: {
-      default: '#FFFBFC',
+      default: '#faede8',
     },
     primary: {
       main: '#E29578',
