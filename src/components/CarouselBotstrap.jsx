@@ -28,7 +28,7 @@ export default function CarouselBotstrap({ itensCar, foods }) {
               justifyContent="space-around"
               alignItems="center"
               // spacing={ 2 }
-              sx={ { mt: 5, mb: 8, zIndex: 1 } }
+              sx={ { mt: 5, mb: 10, zIndex: 1 } }
             >
               <Grid item xs={ 6 }>
                 <Card

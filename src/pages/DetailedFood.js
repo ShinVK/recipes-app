@@ -8,7 +8,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Grid, IconButton, Typography, styled, Collapse, List, ListItem, ListItemText }
+  Grid, IconButton, Typography, styled, Collapse, List, ListItem, ListItemText, Button }
 from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -124,6 +124,16 @@ function DetailedFood({ location: { pathname } }) {
                     <Typography variant="body2" color="text.secondary">
                       { detailFood.strInstructions }
                     </Typography>
+                    {!done2 && (
+                      <Button
+                        type="button"
+                        data-testid="start-recipe-btn"
+                        onClick={ () => history.push(`${pathname}/in-progress`) }
+                        color={ status ? 'primary' : 'secondary' }
+                      >
+                        {status ? 'Continue Recipe' : 'Start Recipe'}
+                      </Button>
+                    )}
 
                   </CardContent>
                   <CardActions disableSpacing>
@@ -159,18 +169,6 @@ function DetailedFood({ location: { pathname } }) {
                           </ListItem>
                         ))}
                       </List>
-                      {/* <Typography paragraph>
-                        <ul>
-                          {ingredients.map((ingredient, i) => (
-                            <li
-                              key={ i }
-                              data-testid={ `${i}-ingredient-name-and-measure` }
-                            >
-                              {ingredient}
-                            </li>
-                          ))}
-                        </ul>
-                      </Typography> */}
                       <iframe
                         data-testid="video"
                         width="300"
@@ -192,17 +190,8 @@ function DetailedFood({ location: { pathname } }) {
                   foods={ false }
                 />
               </Grid>
+
             </Grid>
-            {!done2 && (
-              <button
-                type="button"
-                data-testid="start-recipe-btn"
-                onClick={ () => history.push(`${pathname}/in-progress`) }
-                className="btn__start"
-              >
-                {status ? 'Continue Recipe' : 'Start Recipe'}
-              </button>
-            )}
           </Box>
         ) : <p>carregando...</p> }
       <BottomNav />
