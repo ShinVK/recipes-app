@@ -10,7 +10,8 @@ import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router';
 import AllHeader from '../components/AllHeader';
-import Footer from '../components/Footer';
+// import Footer from '../components/Footer';
+import BottomNav from '../components/mui/BottomNav';
 // import { BackToTop } from '../components/mui/ScrollTes';
 import MyContext from '../context/Mycontext';
 
@@ -76,7 +77,13 @@ export default function Foods({ history: { location } }) {
       </Box>
       <Toolbar />
       {/* <div className="container__meals"> */}
-      <Grid container spacing={ 1 } justifyContent="center" minWidth="300px">
+      <Grid
+        container
+        spacing={ 1 }
+        justifyContent="center"
+        minWidth="300px"
+        sx={ { mb: 10 } }
+      >
         {/* direction="column" */}
         { foodsAPI.length === 1 && isRedirect ? (
           redirectDetailedPage(foodsAPI)
@@ -93,7 +100,7 @@ export default function Foods({ history: { location } }) {
                 style={ { textAlign: 'center' } }
               >
                 <Card
-                  sx={ { maxWidth: 160, bgcolor: '#faede8' } }
+                  sx={ { maxWidth: 160, bgcolor: '#fdf8f6' } }
                   data-testid={ `${i}-recipe-card` }
                   onClick={ () => handleClickRedirect(idMeal) }
                   aria-hidden="true"
@@ -125,7 +132,8 @@ export default function Foods({ history: { location } }) {
             ))}
       </Grid>
       {/* <BackToTop /> */}
-      <Footer />
+      {/* <Footer /> */}
+      <BottomNav />
     </>
   );
 }

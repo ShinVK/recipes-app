@@ -46,6 +46,7 @@ export default function Provider({ children }) {
   const location = useLocation();
   useEffect(() => {
     setActUrl(location.pathname);
+    setIsSearching(false);
     const idFromUrl = location.pathname.replace(/[^0-9]/g, '');
     if (idFromUrl.length > +'3') { setidItem(idFromUrl); }
   }, [location]);

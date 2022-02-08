@@ -18,13 +18,14 @@ import DetailedFood from '../pages/DetailedFood';
 import FoodsInProgress from '../pages/FoodsInProgress';
 import DrinksInProgress from '../pages/DrinksInProgress';
 import NotFound from '../pages/NotFound';
-import { BackToTop } from '../components/mui/ScrollTes';
+// import { BackToTop } from '../components/mui/ScrollTes';
+import CarouselMui from '../components/mui/CarouselMui';
 
 export default function Routes() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route exact path="/scroll" component={ BackToTop } />
+      <Route exact path="/scroll" component={ CarouselMui } />
       <Route exact path="/foods/:id" component={ DetailedFood } />
       <Route exact path="/foods" component={ Foods } />
       <Route exact path="/drinks/:id" component={ DetailedDrink } />

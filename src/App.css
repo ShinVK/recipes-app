@@ -17,9 +17,6 @@
   overflow-x: scroll;
   width: 300px;
 }
-body {
-  background-color: #FA824C;
-}
 
 .checked_text {
   text-decoration: line-through;
