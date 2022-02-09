@@ -5,7 +5,7 @@ export default function useFilterNation(nation) {
 
   useEffect(() => {
     const fetchMealsNationality = async (nation2) => {
-      if (nation2 === 'All') {
+      if (nation2 === 'All' || nation2 === '') {
         const URLFOOD = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
         const response = await fetch(URLFOOD);
         const { meals } = await response.json();
