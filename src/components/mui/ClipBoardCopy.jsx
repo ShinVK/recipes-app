@@ -32,11 +32,16 @@ export default function ClipBoardCopy({ url }) {
       <IconButton aria-label="add to favorites" onClick={ () => handleClick() }>
         <ShareIcon data-testid="share-btn" />
       </IconButton>
-      <Snackbar open={ open } autoHideDuration={ 6000 } onClose={ handleClose }>
+      <Snackbar
+        sx={ { zIndex: 999999999 } }
+        open={ open }
+        autoHideDuration={ 6000 }
+        onClose={ handleClose }
+      >
         <Alert
           onClose={ handleClose }
           severity="success"
-          sx={ { width: '100%', zIndex: 10000333 } }
+          sx={ { width: '100%' } }
         >
           Link Copied!
         </Alert>

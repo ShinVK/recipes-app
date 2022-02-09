@@ -185,10 +185,11 @@ function DetailedFood({ location: { pathname } }) {
                     </CardContent>
                   </Collapse>
                 </Card>
-                <CarouselBotstrap
+                {drinksAPI.length > 0
+                && <CarouselBotstrap
                   itensCar={ divideArray(reduceArr(drinksAPI, +'6'), 2) }
                   foods={ false }
-                />
+                />}
               </Grid>
 
             </Grid>
