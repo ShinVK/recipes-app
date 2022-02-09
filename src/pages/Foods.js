@@ -9,9 +9,7 @@ import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router';
 import AllHeader from '../components/AllHeader';
-// import Footer from '../components/Footer';
 import BottomNav from '../components/mui/BottomNav';
-// import { BackToTop } from '../components/mui/ScrollTes';
 import MyContext from '../context/Mycontext';
 
 export default function Foods({ history: { location } }) {
@@ -30,11 +28,9 @@ export default function Foods({ history: { location } }) {
     handleClick(newValue, 'food');
     setTabValue(newValue);
   };
-  // const history = useHistory();
 
   const reduceFoods12 = (arr, num, num2) => {
     const foods12 = arr.slice(num2, num);
-    // console.log(drinks12);
     return foods12;
   };
 
@@ -74,7 +70,6 @@ export default function Foods({ history: { location } }) {
 
       </Box>
       <Toolbar />
-      {/* <div className="container__meals"> */}
       <Grid
         container
         spacing={ 1 }
@@ -92,8 +87,6 @@ export default function Foods({ history: { location } }) {
                 key={ idMeal }
                 item
                 minWidth="120px"
-                // xs={ 9 }
-                // md={ 3 }
                 style={ { textAlign: 'center' } }
               >
                 <Card
@@ -104,10 +97,6 @@ export default function Foods({ history: { location } }) {
                   className="card__recipes"
                   role="button"
                 >
-                  {/* <CardHeader
-                    title={ strMeal && strMeal.slice(0, +'10') }
-                    subheader={ taBvalue }
-                  /> */}
                   <CardMedia
                     component="img"
                     height="100"
@@ -128,8 +117,6 @@ export default function Foods({ history: { location } }) {
               </Grid>
             ))}
       </Grid>
-      {/* <BackToTop /> */}
-      {/* <Footer /> */}
       <BottomNav />
     </>
   );

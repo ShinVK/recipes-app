@@ -49,9 +49,6 @@ function DetailedDrink({ location: { pathname } }) {
 
   const history = useHistory();
 
-  // useEffect(() => {
-  // }, [detailItem]);
-
   useEffect(() => {
     setdetaildrinks(detailItem);
     setIngredients(ingredients2);
