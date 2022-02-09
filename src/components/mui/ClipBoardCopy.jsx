@@ -33,7 +33,11 @@ export default function ClipBoardCopy({ url }) {
         <ShareIcon data-testid="share-btn" />
       </IconButton>
       <Snackbar open={ open } autoHideDuration={ 6000 } onClose={ handleClose }>
-        <Alert onClose={ handleClose } severity="success" sx={ { width: '100%' } }>
+        <Alert
+          onClose={ handleClose }
+          severity="success"
+          sx={ { width: '100%', zIndex: 10000333 } }
+        >
           Link Copied!
         </Alert>
       </Snackbar>

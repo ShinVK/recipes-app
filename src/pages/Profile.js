@@ -1,7 +1,7 @@
+import { Button, ButtonGroup, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import AllHeader from '../components/AllHeader';
-import Footer from '../components/Footer';
 
 export default function Profile() {
   const history = useHistory();
@@ -14,37 +14,39 @@ export default function Profile() {
   return (
     <div>
       <AllHeader actPage="" title="Profile" btnSearch={ false } />
-      <p>Tela de perfil</p>
-      <h4
+      <Typography
+        variant="h5"
+        sx={ { mt: 7, mb: 5, textAlign: 'center' } }
         data-testid="profile-email"
       >
         {email}
-      </h4>
-      <button
-        type="button"
-        data-testid="profile-done-btn"
-        onClick={ () => history.push('/done-recipes') }
-      >
-        Done Recipes
-      </button>
-      <button
-        type="button"
-        data-testid="profile-favorite-btn"
-        onClick={ () => history.push('/favorite-recipes') }
-      >
-        Favorite Recipes
-      </button>
-      <button
-        type="button"
-        data-testid="profile-logout-btn"
-        onClick={ () => {
-          localStorage.clear();
-          history.push('/');
-        } }
-      >
-        Logout
-      </button>
-      <Footer />
+      </Typography>
+      <ButtonGroup variant="contained" color="secondary">
+
+        <Button
+          data-testid="profile-done-btn"
+          onClick={ () => history.push('/done-recipes') }
+        >
+          Done Recipes
+        </Button>
+        <Button
+          data-testid="profile-favorite-btn"
+          onClick={ () => history.push('/favorite-recipes') }
+        >
+          Favorite Recipes
+        </Button>
+        <Button
+          variant="outlined"
+          color="secondary"
+          data-testid="profile-logout-btn"
+          onClick={ () => {
+            localStorage.clear();
+            history.push('/');
+          } }
+        >
+          Logout
+        </Button>
+      </ButtonGroup>
     </div>
   );
 }

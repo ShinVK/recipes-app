@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import AllHeader from '../components/AllHeader';
-import Footer from '../components/Footer';
 import useNationality from '../hooks/useNationality';
 import useFilterNation from '../hooks/useFilterNation';
+import BottomNav from '../components/mui/BottomNav';
 
 export default function ExploreFoodsNat({ history: { location } }) {
   const [nationalities] = useNationality();
@@ -62,7 +62,7 @@ export default function ExploreFoodsNat({ history: { location } }) {
           </h3>
         </div>
       ))}
-      <Footer />
+      <BottomNav />
     </div>
   );
 }

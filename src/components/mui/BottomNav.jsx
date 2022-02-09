@@ -9,19 +9,12 @@ import { useHistory } from 'react-router-dom';
 import { Paper } from '@mui/material';
 
 export default function BottomNav() {
-  // const [value, setValue] = React.useState(0);
-  //   <Box
-  //   sx={ { '@ sx': { maxWidth: 330 } } }
-  //   justify="space-around"
-  //   color="primary"
-  // >
-
   const history = useHistory();
 
   return (
     <Paper
       sx={
-        { position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100000 }
+        { position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 10000 }
       }
       elevation={ 3 }
     >

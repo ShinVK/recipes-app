@@ -4,9 +4,8 @@ import { useHistory } from 'react-router-dom';
 import {
   Box,
   Card,
-  CardActions, CardContent, CardMedia, Grid, IconButton, Tab, Tabs, Typography }
+  CardActions, CardContent, CardMedia, Grid, Tab, Tabs, Typography }
 from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import AllHeader from '../components/AllHeader';
 import useGetFromLocal from '../hooks/useGetFromLocal';
 import BottomNav from '../components/mui/BottomNav';
@@ -97,15 +96,6 @@ export default function RecipesDone({ history: { location } }) {
                     role="button"
                   >
                     <CardActions disableSpacing>
-                      <IconButton
-                        onClick={ () => { removeFavorite(id); setUp(true); } }
-                        aria-label="add to favorites"
-                      >
-                        <FavoriteIcon
-                          color="primary"
-                          data-testid="favorite-btn"
-                        />
-                      </IconButton>
                       <ClipBoardCopy url={ `foods/${id}` } />
                     </CardActions>
                     <CardMedia
@@ -171,19 +161,10 @@ export default function RecipesDone({ history: { location } }) {
                   role="button"
                 >
                   <CardActions disableSpacing>
-                    <IconButton
-                      onClick={ () => { removeFavorite(id); setUp(true); } }
-                      aria-label="add to favorites"
-                    >
-                      <FavoriteIcon
-                        color="primary"
-                        data-testid="favorite-btn"
-                      />
-                    </IconButton>
-                    <ClipBoardCopy url={ `foods/${id}` } />
+                    <ClipBoardCopy url={ `drinks/${id}` } />
                   </CardActions>
                   <CardMedia
-                    onClick={ () => history.push(`/foods/${id}`) }
+                    onClick={ () => history.push(`/drinks/${id}`) }
                     component="img"
                     height="100"
                     image={ image }
@@ -192,7 +173,7 @@ export default function RecipesDone({ history: { location } }) {
                   />
                   <CardContent>
                     <Typography
-                      onClick={ () => history.push(`/foods/${id}`) }
+                      onClick={ () => history.push(`/drinks/${id}`) }
                       data-testid={ `${i}-horizontal-name` }
                       variant="h5"
                       component="div"
