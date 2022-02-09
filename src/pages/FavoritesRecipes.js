@@ -41,6 +41,8 @@ export default function FavoritesRecipes({ history: { location } }) {
     setTabValue(newValue);
   };
 
+  console.log(recipes.length);
+
   useEffect(() => {
     setRecipes(allRecipes);
     setUp(updt);

@@ -19,7 +19,7 @@ export default function ExploreFoodsIng({ history: { location } }) {
       {foodsIng && foodsIng.map(({ strIngredient }, index) => (
         <div
           onClick={ () => filter(true, strIngredient) }
-          onKeyDown={ () => console.log('strIngredient') }
+          onKeyDown={ () => {} }
           role="button"
           key={ index }
           data-testid={ `${index}-ingredient-card` }

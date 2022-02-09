@@ -1,10 +1,15 @@
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router';
-// import { useHistory } from 'react-router';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Grid, Tab, Tabs, Toolbar, Typography } from '@mui/material';
 import AllHeader from '../components/AllHeader';
-import Footer from '../components/Footer';
 import MyContext from '../context/Mycontext';
+import BottomNav from '../components/mui/BottomNav';
 
 export default function Drinks({ history: { location } }) {
   const { stateHook:
@@ -15,12 +20,16 @@ export default function Drinks({ history: { location } }) {
       isRedirect,
       handleClickRedirect,
     } } = useContext(MyContext);
-  // const history = useHistory();
+  const [taBvalue, setTabValue] = useState('All');
 
   const reduceDrinks12 = (arr, num) => {
     const drinks12 = arr.slice(0, num);
-    // console.log(drinks12);
     return drinks12;
+  };
+
+  const handleChangeTab = (event, newValue) => {
+    handleClick(newValue, 'drinks');
+    setTabValue(newValue);
   };
 
   const redirectDetailedPage = (arr) => {
@@ -29,56 +38,87 @@ export default function Drinks({ history: { location } }) {
   };
 
   return (
-    <div>
+    <>
       <AllHeader title="Drinks" actPage={ location.pathname } />
-      <form>
-
-        {reduceDrinks12(categoriesDrinks, +'5').map(({ strCategory }, i) => (
-          <button
-            key={ i }
-            data-testid={ `${strCategory}-category-filter` }
-            value={ strCategory }
-            onClick={ (event) => handleClick(event, 'drinks') }
-            type="button"
+      <Box
+        sx={ { '@ sx': { maxWidth: 330 } } }
+        justify="space-around"
+        color="primary"
+      >
+        <Box sx={ { width: '100%' } }>
+          <Tabs
+            value={ taBvalue }
+            onChange={ handleChangeTab }
+            textColor="secondary"
+            indicatorColor="secondary"
+            variant="scrollable"
+            aria-label="secondary tabs example"
           >
-            {strCategory}
-          </button>
-        ))}
-        <button
-          type="button"
-          value="all"
-          data-testid="All-category-filter"
-          onClick={ (event) => handleClick(event, 'drinks') }
-        >
-          All
-        </button>
+            <Tab value="All" label="All" />
+            {reduceDrinks12(categoriesDrinks, +'5').map(({ strCategory }, i) => (
+              <Tab
+                value={ strCategory }
+                key={ i }
+                data-testid={ `${strCategory}-category-filter` }
+                label={ strCategory }
+              />
+            ))}
+          </Tabs>
+        </Box>
+      </Box>
+      <Toolbar />
 
-      </form>
-      <div className="container__meals">
+      <Grid
+        container
+        spacing={ 1 }
+        justifyContent="center"
+        minWidth="300px"
+        sx={ { mb: 10 } }
+      >
         { drinksAPI.length === 1 && isRedirect ? (
           redirectDetailedPage(drinksAPI)
         )
           : (reduceDrinks12(drinksAPI, +'12'))
             .map(({ idDrink, strDrink, strDrinkThumb }, i) => (
-              <div
+              <Grid
                 key={ idDrink }
-                data-testid={ `${i}-recipe-card` }
-                onClick={ () => handleClickRedirect(idDrink) }
-                aria-hidden="true"
-                role="button"
+                item
+                minWidth="120px"
+                // xs={ 9 }
+                // md={ 3 }
+                style={ { textAlign: 'center' } }
               >
-                <img
-                  style={ { width: '50px' } }
-                  data-testid={ `${i}-card-img` }
-                  src={ strDrinkThumb }
-                  alt="thumbnail drink"
-                />
-                <h3 data-testid={ `${i}-card-name` }>{strDrink}</h3>
-              </div>
+                <Card
+                  sx={ { maxWidth: 160, bgcolor: '#fdf8f6' } }
+                  data-testid={ `${i}-recipe-card` }
+                  onClick={ () => handleClickRedirect(idDrink) }
+                  aria-hidden="true"
+                  className="card__recipes"
+                  role="button"
+                >
+                  <CardMedia
+                    component="img"
+                    height="100"
+                    image={ strDrinkThumb }
+                    alt="thumbnail food"
+                    data-testid={ `${i}-card-img` }
+                  />
+                  <CardContent>
+                    <Typography variant="h5" component="div" color="secondary">
+                      { taBvalue }
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      { strDrink.length > +'24'
+                        ? `${strDrink.slice(0, +'24')}...` : strDrink}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
             ))}
-      </div>
-      <Footer />
-    </div>
+      </Grid>
+      {/* <Footer /> */}
+      <BottomNav />
+    </>
   );
 }
 

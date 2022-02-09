@@ -1,11 +1,14 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable react/jsx-max-depth */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'react-bootstrap/Carousel';
 import { Card, CardHeader, CardMedia, Grid } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 
 export default function CarouselBotstrap({ itensCar, foods }) {
   const [index, setindex] = useState(0);
+  const history = useHistory();
 
   const handleSelect = () => {
     if (index === +'2') return setindex(0);
@@ -34,6 +37,9 @@ export default function CarouselBotstrap({ itensCar, foods }) {
                 <Card
                   sx={ { maxWidth: 165 } }
                   data-testid={ `${i3}-recomendation-card` }
+                  onClick={ foods
+                    ? () => history.push(`/foods/${el[0].idMeal}`)
+                    : () => history.push(`/drinks/${el[0].idDrink}`) }
                 >
                   <CardHeader
                     data-testid={ `${i3}-recomendation-title` }
@@ -51,6 +57,9 @@ export default function CarouselBotstrap({ itensCar, foods }) {
                 <Card
                   sx={ { maxWidth: 165 } }
                   data-testid={ `${i3 + 1}-recomendation-card` }
+                  onClick={ foods
+                    ? () => history.push(`/foods/${el[1].idMeal}`)
+                    : () => history.push(`/drinks/${el[1].idDrink}`) }
                 >
                   <CardHeader
                     data-testid={ `${i3 + 1}-recomendation-title` }

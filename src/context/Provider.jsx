@@ -23,7 +23,6 @@ export default function Provider({ children }) {
   const [isFavorite, setIsFavorite] = useState('');
   const [actURL, setActUrl] = useState('');
   const history = useHistory();
-  const [isCopied, setisCopied] = useState(false);
 
   const handleClick = async (value, page) => {
     // const { value } = target;
@@ -36,10 +35,10 @@ export default function Provider({ children }) {
       const results = await fetchFilterCategory(value, page);
       setfoodsAPI(results);
     } if (page === 'drinks') {
-      if (catDrinks === value || value === 'all') return setdrinksAPI(defaultDrinks);
+      if (value === 'All') return setdrinksAPI(defaultDrinks);
+      setcatDrinks(value);
       const results = await fetchFilterCategory(value, page);
       setdrinksAPI(results);
-      setcatDrinks(value);
     }
   };
 
@@ -119,11 +118,6 @@ export default function Provider({ children }) {
     filterLocalStorage(id);
   };
 
-  const copyClipBoard = (url) => {
-    navigator.clipboard.writeText(`http://localhost:3000/${url}`);
-    setisCopied(!isCopied);
-  };
-
   const filterByIngredient = async (isFood, ingredient) => {
     if (isFood) {
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`);
@@ -156,8 +150,6 @@ export default function Provider({ children }) {
     handleClickRedirect,
     isFavorite,
     handleClickFavorite,
-    isCopied,
-    copyClipBoard,
     removeFavorite,
     filter: filterByIngredient,
   };

@@ -1,14 +1,26 @@
+/* eslint-disable react/jsx-max-depth */
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Grid, IconButton, Typography }
+from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import MyContext from '../context/Mycontext';
 import useUpdateDetailRecipe from '../hooks/useUpdateDetailRecipe';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import useCatchIngredients from '../hooks/useCatchIngredients';
 import { saveRecipesDone, saveRecipesInProgess } from '../services/localStorage';
 import { drinkDone } from '../services/favRecipes';
 import useVerifyStatus from '../hooks/useVerifiyStatus';
+import ClipBoardCopy from '../components/mui/ClipBoardCopy';
+import AllHeader from '../components/AllHeader';
+import BottomNav from '../components/mui/BottomNav';
 
 function DrinksInProgress({ location: { pathname } }) {
   const {
@@ -16,8 +28,6 @@ function DrinksInProgress({ location: { pathname } }) {
     {
       isFavorite,
       handleClickFavorite,
-      isCopied,
-      copyClipBoard,
     } } = useContext(MyContext);
 
   const history = useHistory();
@@ -61,78 +71,106 @@ function DrinksInProgress({ location: { pathname } }) {
   };
 
   return (
-    <div>
-      {isLoading
-        ? (
-          <>
-            <img
-              src={ detailItem.strDrinkThumb }
-              alt="imagem do drink"
-              data-testid="recipe-photo"
-              width="330"
-            />
-            <h2
-              data-testid="recipe-title"
+    <>
+      <AllHeader
+        title="Favorite Recipes"
+        btnSearch={ false }
+        actPage={ pathname }
+      />
+      <Box sx={ { '@ sx': { minWidth: 350 }, mt: 3, mb: 10 } }>
+        { isLoading
+          ? (
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              sx={ { '@ sx': { maxWidth: 340 } } }
             >
-              { detailItem.strDrink }
+              <Grid item xs={ 3 } textAlign="left">
 
-            </h2>
-            <h4 data-testid="recipe-category">{ detailItem.strAlcoholic }</h4>
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ () => copyClipBoard(`drinks/${id}`) }
-            >
-              Compartilhar
-            </button>
-            { isCopied && <span style={ { font: '10px' } }>Link copied!</span> }
-            <input
-              data-testid="favorite-btn"
-              type="image"
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-              alt="search icon"
-              onClick={ () => handleClickFavorite(id, detailItem, false) }
-            />
-            <p data-testid="instructions">
-              { detailItem.strInstructions }
-            </p>
-            {ingredients.map((ingredient, i) => (
-              <div
-                className="form-check"
-                key={ i }
-                data-testid={ `${i}-ingredient-step` }
-              >
-                <label
-                  key={ i }
-                  className={ (steps[i])
-                    ? 'checked_text form-check-label' : 'form-check-label' }
-                  htmlFor={ `${i}-input` }
-                  // data-testid={ `${i}-ingredient-step` }
-                >
-
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id={ `${i}-input` }
-                    name={ `step${i}` }
-                    checked={ steps[i] }
-                    onChange={ () => onHandleChange(i) }
+                <Card sx={ { maxWidth: 340 } }>
+                  <CardMedia
+                    component="img"
+                    minwidth="150"
+                    image={ detailItem.strDrinkThumb }
+                    alt="imagem da refeição"
+                    data-testid="recipe-photo"
                   />
-                  {ingredient}
-                </label>
-              </div>
-            ))}
-            <button
-              type="button"
-              data-testid="finish-recipe-btn"
-              disabled={ disable }
-              onClick={ () => handleClickDone(detailItem) }
-            >
-              Finish Recipe
-            </button>
-          </>
-        ) : <p>Carregando...</p>}
-    </div>);
+                  <CardContent>
+                    <Typography
+                      variant="h4"
+                      component="div"
+                      color="secondary"
+                      data-testid="recipe-title"
+                    >
+                      { detailItem.strDrink }
+                    </Typography>
+                  </CardContent>
+                  <CardActions disableSpacing>
+                    <IconButton
+                      onClick={ () => handleClickFavorite(id, detailItem, false) }
+                      aria-label="add to favorites"
+                    >
+                      <FavoriteIcon
+                        color={ isFavorite ? 'primary' : 'grey[500]' }
+                        data-testid="favorite-btn"
+                      />
+                    </IconButton>
+                    <ClipBoardCopy url={ `foods/${detailItem.idDrink}` } />
+                    <Button
+                      type="button"
+                      data-testid="finish-recipe-btn"
+                      disabled={ disable }
+                      onClick={ () => handleClickDone(detailItem) }
+                      variant="contained"
+                    >
+                      Done!
+                    </Button>
+                  </CardActions>
+                  <CardContent>
+                    <Typography
+                      variant="body2"
+                      component="div"
+                      color="secondary"
+                      data-testid="instructions"
+                    >
+                      { detailItem.strInstructions }
+                    </Typography>
+                    {ingredients.map((ingredient, i) => (
+                      <div
+                        className="form-check"
+                        key={ i }
+                        data-testid={ `${i}-ingredient-step` }
+                      >
+                        <label
+                          key={ i }
+                          className={ (steps[i])
+                            ? 'checked_text form-check-label' : 'form-check-label' }
+                          htmlFor={ `${i}-input` }
+                        >
+
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id={ `${i}-input` }
+                            name={ `step${i}` }
+                            checked={ steps[i] }
+                            onChange={ () => onHandleChange(i) }
+                          />
+                          {ingredient}
+                        </label>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+          ) : <p>carregando...</p> }
+
+      </Box>
+      <BottomNav />
+    </>);
 }
 
 DrinksInProgress.propTypes = {

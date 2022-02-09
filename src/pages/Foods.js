@@ -3,7 +3,6 @@ import {
   Box,
   Card,
   CardContent,
-  // CardHeader,
   CardMedia,
   Grid, Tab, Tabs, Toolbar, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
@@ -46,7 +45,6 @@ export default function Foods({ history: { location } }) {
 
   return (
     <>
-
       <AllHeader title="Foods" actPage={ location.pathname } />
       <Box
         sx={ { '@ sx': { maxWidth: 330 } } }
@@ -84,7 +82,6 @@ export default function Foods({ history: { location } }) {
         minWidth="300px"
         sx={ { mb: 10 } }
       >
-        {/* direction="column" */}
         { foodsAPI.length === 1 && isRedirect ? (
           redirectDetailedPage(foodsAPI)
         )

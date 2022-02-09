@@ -21,30 +21,30 @@ export default function BottomNav() {
   return (
     <Paper
       sx={
-        { position: 'fixed', bottom: 0, left: 0, right: 0 }
+        { position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100000 }
       }
       elevation={ 3 }
     >
       <Box sx={ { '@ sx': { maxWidth: 330 } } }>
         <BottomNavigation
           showLabels
-          // value={ value }
-          onChange={ (event, newValue) => {
-            if (newValue === 0) {
-              history.goBack();
-            }
-            if (newValue === 1) {
-              history.push('/favorite-recipes');
-            } else {
-              history.push('/done-recipes');
-            }
-
-          // setValue(newValue);
-          } }
         >
-          <BottomNavigationAction label="Back" icon={ <ArrowBackIosNewIcon /> } />
-          <BottomNavigationAction label="Favorites" icon={ <FavoriteIcon /> } />
-          <BottomNavigationAction label="Done" icon={ <DoneIcon /> } />
+          <BottomNavigationAction
+            label="Back"
+            icon={ <ArrowBackIosNewIcon /> }
+            onClick={ () => history.goBack() }
+          />
+          <BottomNavigationAction
+            label="Favorites"
+            icon={ <FavoriteIcon /> }
+            onClick={ () => history.push('/favorite-recipes') }
+          />
+          <BottomNavigationAction
+            label="Done"
+            icon={ <DoneIcon
+              onClick={ () => history.push('/done-recipes') }
+            /> }
+          />
         </BottomNavigation>
       </Box>
     </Paper>
