@@ -6,6 +6,7 @@ Foi realizado em grupo em conjunto com o https://github.com/MychaelJales e com o
 
 Foi um projeto desafiador com muitas implementações e no fim utilizando uma biblioteca nova o material UI para estilização.
 
+Para entrar na página de login, é só digitar um email no formato email@email.com e uma senha qualquer de 7 digitos;
 ---
 
 ## Aprendizados
